@@ -15,20 +15,20 @@ public class MapManager : MonoBehaviour
     [SerializeField] private int roomMinSize = 6;
     [SerializeField] private int maxRooms = 30;
 
-    [Header("Colors")]
-    [SerializeField] private Color32 darkColor = new Color32(0, 0, 0, 0);
-    [SerializeField] private Color32 lightColor = new Color32(255, 255, 255, 255);
-
     [Header("Tiles")]
     [SerializeField] private TileBase floorTile;
     [SerializeField] private TileBase wallTile;
+    [SerializeField] private TileBase fogTile;
 
     [Header("Tilemaps")]
     [SerializeField] private Tilemap floorMap;
     [SerializeField] private Tilemap obstacleMap;
+    [SerializeField] private Tilemap fogMap;
 
     [Header("Features")]
     [SerializeField] private List<RectangularRoom> rooms = new List<RectangularRoom>();
+    [SerializeField] private List<Vector3Int> visibleTiles = new List<Vector3Int>();
+    [SerializeField] private Dictionary<Vector3Int, TileData> tiles = new Dictionary<Vector3Int, TileData>();
 
 
     public TileBase FloorTile { get => floorTile; }
@@ -69,3 +69,4 @@ public class MapManager : MonoBehaviour
 
 
 }
+//testing
