@@ -14,6 +14,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private int roomMaxSize = 10;
     [SerializeField] private int roomMinSize = 6;
     [SerializeField] private int maxRooms = 30;
+    [SerializeField] private int maxMonstersPerRoom = 2;
 
     [Header("Tiles")]
     [SerializeField] private TileBase floorTile;
@@ -35,6 +36,7 @@ public class MapManager : MonoBehaviour
     public TileBase WallTile { get => wallTile; }
     public Tilemap FloorMap { get => floorMap; }
     public Tilemap ObstacleMap { get => obstacleMap; }
+    public Tilemap FogMap { get => fogMap; }
 
     public List<RectangularRoom> Rooms { get => rooms; }
 
@@ -50,10 +52,12 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         ProcGen procGen = new ProcGen();
-        procGen.GenerateDungeon(width, height, roomMaxSize, roomMinSize, maxRooms, rooms);
+        procGen.GenerateDungeon(width, height, roomMaxSize, roomMinSize, maxRooms, maxMonstersPerRoom, rooms);
 
-        
-        Instantiate(Resources.Load<GameObject>("NPC"), new Vector3(40 + 5.5f, 25 + 0.5f, 0), Quaternion.identity).name = "NPC";
+        AddTileMapToDictionary(floorMap);
+        AddTileMapToDictionary(obstacleMap);
+
+        SetupFogMap();
 
         Camera.main.transform.position = new Vector3(40, 20.25f, -10);
         Camera.main.orthographicSize = 27;
@@ -62,11 +66,92 @@ public class MapManager : MonoBehaviour
     /// <summary>Return True is x and y are inside the bounds of the map.</summary>
     public bool InBounds(int x, int y) => 0 <= x && x < width && 0 <= y && y < height;
 
-    public void CreatePlayer(Vector2 position)
+    public void CreateEntity(string entity, Vector2 position)
     {
-        Instantiate(Resources.Load<GameObject>("Player"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Player";
+        switch (entity)
+        {
+            case "Player":
+                Instantiate(Resources.Load<GameObject>("Player"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Player";
+                break;
+            case "Orc":
+                Instantiate(Resources.Load<GameObject>("Orc"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Orc";
+                break;
+            case "Troll":
+                Instantiate(Resources.Load<GameObject>("Troll"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Troll";
+                break;
+            default:
+                UnityEngine.Debug.LogError("Entity not found");
+                break;
+        }        
+    }
+
+    public void UpdateFogMap(List<Vector3Int> playerFOV)
+    {
+        foreach (Vector3Int pos in visibleTiles)
+        {
+            if (!tiles[pos].isExplored)
+            {
+                tiles[pos].isExplored = true;
+            }
+
+            tiles[pos].isVisible = false;
+            fogMap.SetColor(pos, new Color(1.0f, 1.0f, 1.0f, 0.5f));
+        }
+
+        visibleTiles.Clear();
+
+        foreach (Vector3Int pos in playerFOV)
+        {
+            tiles[pos].isVisible = true;
+            fogMap.SetColor(pos, Color.clear);
+            visibleTiles.Add(pos);
+        }
+    }
+
+    public void SetEntitiesVisibilities()
+    {
+        foreach (Entity entity in GameManager.instance.Entities)
+        {
+            if (entity.GetComponent<Player>())
+            {
+                continue;
+            }
+
+            Vector3Int entityPosition = floorMap.WorldToCell(entity.transform.position);
+
+            if (visibleTiles.Contains(entityPosition))
+            {
+                entity.GetComponent<SpriteRenderer>().enabled = true;
+            }
+            else
+            {
+                entity.GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+    }
+
+    private void AddTileMapToDictionary(Tilemap tilemap)
+    {
+        foreach (Vector3Int pos in tilemap.cellBounds.allPositionsWithin)
+        {
+            if (!tilemap.HasTile(pos))
+            {
+                continue;
+            }
+
+            TileData tile = new TileData();
+            tiles.Add(pos, tile);
+        }
+    }
+
+    private void SetupFogMap()
+    {
+        foreach(Vector3Int pos in tiles.Keys)
+        {
+            fogMap.SetTile(pos, fogTile);
+            fogMap.SetTileFlags(pos, TileFlags.None);
+        }
     }
 
 
 }
-//testing

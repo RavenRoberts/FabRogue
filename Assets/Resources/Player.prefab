@@ -118,3 +118,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entity
   isSentient: 1
+  blocksMovement: 1
+  fieldOfViewRange: 8
+  fieldOfView: []
