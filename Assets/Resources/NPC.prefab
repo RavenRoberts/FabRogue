@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3248684678930179478}
   - component: {fileID: 5252565575550520459}
-  - component: {fileID: 5376112589231069882}
+  - component: {fileID: -8832993362214307210}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5376112589231069882
+--- !u!114 &-8832993362214307210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,10 +100,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 9199910914733307333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4b85e396158424abf1d525c7d79215, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f527cce2fc7cd64c94f2bed0edb535d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity
-  isSentient: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Actor
   blocksMovement: 1
+  isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
+  aI: {fileID: 0}

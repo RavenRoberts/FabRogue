@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2319923091761626038}
   - component: {fileID: 3768180656701754500}
   - component: {fileID: -5422147120188286624}
-  - component: {fileID: -8986475780406861619}
+  - component: {fileID: 5954568212104567295}
+  - component: {fileID: -3878619934340393615}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -105,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveKeyHeld: 0
---- !u!114 &-8986475780406861619
+--- !u!114 &5954568212104567295
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,10 +115,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957274491260647867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4b85e396158424abf1d525c7d79215, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f527cce2fc7cd64c94f2bed0edb535d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity
-  isSentient: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Actor
   blocksMovement: 1
+  isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
+  aI: {fileID: 0}
+--- !u!114 &-3878619934340393615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fighter
+  maxHp: 30
+  hp: 30
+  defense: 2
+  power: 5
+  target: {fileID: 0}

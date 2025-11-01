@@ -10,7 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3248684678930179478}
   - component: {fileID: 5252565575550520459}
-  - component: {fileID: 5376112589231069882}
+  - component: {fileID: 1166125933783594286}
+  - component: {fileID: -8804623019734845695}
+  - component: {fileID: 627981669234461007}
+  - component: {fileID: -6194782333776768822}
   m_Layer: 0
   m_Name: Troll
   m_TagString: Untagged
@@ -91,7 +94,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5376112589231069882
+--- !u!114 &1166125933783594286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,10 +103,55 @@ MonoBehaviour:
   m_GameObject: {fileID: 9199910914733307333}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a4b85e396158424abf1d525c7d79215, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f527cce2fc7cd64c94f2bed0edb535d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Entity
-  isSentient: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Actor
   blocksMovement: 1
+  isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
+  aI: {fileID: -6194782333776768822}
+--- !u!114 &-8804623019734845695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199910914733307333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fighter
+  maxHp: 16
+  hp: 16
+  defense: 2
+  power: 4
+  target: {fileID: 0}
+--- !u!114 &627981669234461007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199910914733307333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67e819d98cca90a45a57e44a418266fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AStar
+--- !u!114 &-6194782333776768822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199910914733307333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00c569c6007a12c419b54868dd984595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HostileEnemy
+  aStar: {fileID: 627981669234461007}
+  fighter: {fileID: -8804623019734845695}
+  isFighting: 0
