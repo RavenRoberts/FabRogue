@@ -15,6 +15,7 @@ public class MapManager : MonoBehaviour
     [SerializeField] private int roomMinSize = 6;
     [SerializeField] private int maxRooms = 30;
     [SerializeField] private int maxMonstersPerRoom = 2;
+    [SerializeField] private int maxItemsPerRoom = 2;
 
     [Header("Tiles")]
     [SerializeField] private TileBase floorTile;
@@ -54,7 +55,7 @@ public class MapManager : MonoBehaviour
     void Start()
     {
         ProcGen procGen = new ProcGen();
-        procGen.GenerateDungeon(width, height, roomMaxSize, roomMinSize, maxMonstersPerRoom, maxRooms, rooms);
+        procGen.GenerateDungeon(width, height, roomMaxSize, roomMinSize, maxRooms, maxMonstersPerRoom, maxItemsPerRoom, rooms);
 
         AddTileMapToDictionary(floorMap);
         AddTileMapToDictionary(obstacleMap);
@@ -80,6 +81,9 @@ public class MapManager : MonoBehaviour
                 break;
             case "Troll":
                 Instantiate(Resources.Load<GameObject>("Troll"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Troll";
+                break;
+            case "Potion of Health":
+                Instantiate(Resources.Load<GameObject>("Potion of Health"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity).name = "Potion of Health";
                 break;
             default:
                 UnityEngine.Debug.LogError("Entity not found");
