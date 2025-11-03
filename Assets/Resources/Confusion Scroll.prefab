@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 4972137787809416616}
   - component: {fileID: 8042776917614080047}
   - component: {fileID: 4575591567161382411}
-  - component: {fileID: 5405293101734850032}
+  - component: {fileID: -6897408440597045804}
   m_Layer: 0
-  m_Name: Potion of Health
+  m_Name: Confusion Scroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,8 +81,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -541001264541332043, guid: 5245d3963d3faca44a9ea638ab5a63d3, type: 3}
-  m_Color: {r: 0.70346546, g: 0, b: 0.8396226, a: 1}
+  m_Sprite: {fileID: -6197464602949744671, guid: 5245d3963d3faca44a9ea638ab5a63d3, type: 3}
+  m_Color: {r: 1, g: 0, b: 0.81819344, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -105,8 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   blocksMovement: 0
-  consumable: {fileID: 5405293101734850032}
---- !u!114 &5405293101734850032
+  consumable: {fileID: -6897408440597045804}
+--- !u!114 &-6897408440597045804
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5277026343733962276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7732c11dd93f1d346b634aa3dc5ba801, type: 3}
+  m_Script: {fileID: 11500000, guid: a28aa2c640060d641bd8585c95920b5e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Healing
-  amount: 4
+  m_EditorClassIdentifier: Assembly-CSharp::Confusion
+  numberOfTurns: 10

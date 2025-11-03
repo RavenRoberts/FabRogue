@@ -1,49 +1,21 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Item))]
 public class Consumable : MonoBehaviour
 {
-    public enum ConsumableType
-    {
-        Healing,
-    }
-    [SerializeField] private ConsumableType consumableType;
-    [SerializeField] private int amount = 0;
+    public virtual bool Activate(Actor actor) => false;
+    public virtual bool Cast(Actor actor, Actor target) => false;
+    public virtual bool Cast(Actor actor, List<Actor> targets) => false;
 
-    public ConsumableType _ConsumableType { get => consumableType; }
-    public int Amount { get => amount; }
-
-    public bool Activate(Actor actor, Item item)
+    public void Consume(Actor consumer)
     {
-        switch (consumableType)
+        if (consumer.GetComponent<Inventory>().SelectedConsumable == this)
         {
-            case ConsumableType.Healing:
-                return Healing(actor, item);
-            default:
-                return false;
+            consumer.GetComponent<Inventory>().SelectedConsumable = null;
         }
-    }
-
-    public bool Healing(Actor actor, Item item)
-    {
-        int amountRecovered = actor.GetComponent<Fighter>().Heal(amount);
-
-        if (amountRecovered > 0)
-        {
-            UIManager.instance.AddMessage($"You consume the {name} and recover {amountRecovered} HP!", "#00ff00");
-            Consume(actor, item);
-            return true;
-        }
-        else
-        {
-            UIManager.instance.AddMessage("Your health is already full.", "#808080");
-            return false;
-        }
-    }
-
-    private void Consume(Actor actor, Item item)
-    {
-        actor.Inventory.Items.Remove(item);
-        Destroy(item.gameObject);
+        consumer.Inventory.Items.Remove(GetComponent<Item>());
+        Destroy(gameObject);
     }
 }

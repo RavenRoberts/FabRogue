@@ -196,7 +196,23 @@ sealed class ProcGen : MonoBehaviour
                 }
             }
 
-            MapManager.instance.CreateEntity("Potion of Health", new Vector2(x, y));
+            float randomValue = UnityEngine.Random.value;
+            if (randomValue < 0.7f)
+            {
+                MapManager.instance.CreateEntity("Potion of Health", new Vector2(x, y));
+            }
+            else if (randomValue < 0.8f)
+            {
+                MapManager.instance.CreateEntity("Fireball Scroll", new Vector2(x, y));
+            }
+            else if (randomValue < 0.9f)
+            {
+                MapManager.instance.CreateEntity("Confusion Scroll", new Vector2(x, y));
+            }
+            else
+            {
+                MapManager.instance.CreateEntity("Lightning Scroll", new Vector2(x, y));
+            }
             item++;
         }
     }
