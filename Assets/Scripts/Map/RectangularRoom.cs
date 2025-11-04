@@ -20,12 +20,17 @@ public class RectangularRoom
         this.width = width;
         this.height = height;
     }
+    /// <summary>
+    /// return the center of the room
+    /// </summary>
 
     public Vector2Int Center() => new Vector2Int(x + width / 2, y + height / 2);
 
     /// <summary>
-    /// Return the area of this room as a bounds
+    /// Return a random inner position of the room
     /// </summary>
+
+    public Vector2Int RandomPoint() => new Vector2Int(UnityEngine.Random.Range(x + 1, x + width - 1), UnityEngine.Random.Range(y + 1, y + height - 1));
 
     public Bounds GetBounds() => new Bounds(new Vector3(x, y, 0), new Vector3(width, height, 0));
 

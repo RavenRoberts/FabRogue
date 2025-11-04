@@ -39,7 +39,7 @@ public class SaveManager : MonoBehaviour
         return true;
     }
 
-    public void SaveGame()
+    public void SaveGame(bool tempSave = true)
     {
         save.SavedFloor = currentFloor;
 
@@ -52,6 +52,8 @@ public class SaveManager : MonoBehaviour
         {
             AddScene(SaveState());
         }
+
+        if (!tempSave) return;
 
         string path = Path.Combine(Application.persistentDataPath, saveFileName);
         byte[] saveJson = SerializationUtility.SerializeValue(save, DataFormat.JSON); //serialize the state to json
@@ -72,15 +74,7 @@ public class SaveManager : MonoBehaviour
         }
         else
         {
-            SceneState sceneState = save.Scenes.Find(x => x.FloorNumber == currentFloor);
-            if (sceneState is not null)
-            {
-                LoadState(sceneState);
-            }
-            else
-            {
-                UnityEngine.Debug.LogError("No saved state for this floor");
-            }
+            LoadScene();
         }
     }
 
@@ -94,16 +88,29 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateScene(SceneState sceneState) => save.Scenes[currentFloor - 1] = sceneState;
 
+    public void LoadScene(bool canRemovePlayer = true)
+    {
+        SceneState sceneState = save.Scenes.Find(x => x.FloorNumber == currentFloor);
+        if (sceneState is not null)
+        {
+            LoadState(sceneState, canRemovePlayer);
+        }
+        else
+        {
+            UnityEngine.Debug.LogError("No saved state for this floor");
+        }
+    }
+
     public SceneState SaveState() => new SceneState(
         currentFloor,
         GameManager.instance.SaveState(),
         MapManager.instance.SaveState()
     );
 
-    public void LoadState(SceneState sceneState)
+    public void LoadState(SceneState sceneState, bool canRemovePlayer)
     {
         MapManager.instance.LoadState(sceneState.MapState);
-        GameManager.instance.LoadState(sceneState.GameState);
+        GameManager.instance.LoadState(sceneState.GameState, canRemovePlayer);
     }
 }
 

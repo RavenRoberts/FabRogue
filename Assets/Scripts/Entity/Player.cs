@@ -50,6 +50,10 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         if (context.performed)
         {
+            if (targetMode)
+            {
+                ToggleTargetMode();
+            }
             if (!UIManager.instance.IsEscapeMenuOpen && !UIManager.instance.IsMenuOpen)
             {
                 UIManager.instance.ToggleEscapeMenu();
@@ -57,10 +61,6 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
             else if (UIManager.instance.IsMenuOpen)
             {
                 UIManager.instance.ToggleMenu();
-            }
-            else if (targetMode)
-            {
-                ToggleTargetMode();
             }
         }
     }
@@ -143,6 +143,21 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
                         Action.CastAction(GetComponent<Actor>(), targets, GetComponent<Inventory>().SelectedConsumable);
                     }
                 }
+            }
+            else if (CanAct())
+            {
+                Action.TakeStairsAction(GetComponent<Actor>());
+            }
+        }
+    }
+
+    public void OnInfo(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if(CanAct() || UIManager.instance.IsCharacterInformationMenuOpen)
+            {
+                UIManager.instance.ToggleCharacterInformationMenu(GetComponent<Actor>());
             }
         }
     }

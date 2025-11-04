@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8565738878586325533}
   - component: {fileID: 6694527197386572942}
   - component: {fileID: -5121539719921142362}
+  - component: {fileID: 1791564697180652187}
   m_Layer: 0
   m_Name: Orc
   m_TagString: Untagged
@@ -81,7 +82,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -1167659037
-  m_SortingLayer: 3
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 269542423, guid: 5245d3963d3faca44a9ea638ab5a63d3, type: 3}
   m_Color: {r: 0.24705882, g: 0.49803922, b: 0.24705882, a: 1}
@@ -112,6 +113,8 @@ MonoBehaviour:
   fieldOfView: []
   aI: {fileID: -5121539719921142362}
   inventory: {fileID: 0}
+  fighter: {fileID: 8565738878586325533}
+  level: {fileID: 1791564697180652187}
 --- !u!114 &8565738878586325533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +159,21 @@ MonoBehaviour:
   aStar: {fileID: 6694527197386572942}
   fighter: {fileID: 8565738878586325533}
   isFighting: 0
+--- !u!114 &1791564697180652187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199910914733307333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c0a6babca0ce584cb59a003d9d1a84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Level
+  currentLevel: 1
+  currentXp: 0
+  xpToNextLevel: 350
+  levelUpBase: 200
+  levelUpFactor: 150
+  xpGiven: 30
