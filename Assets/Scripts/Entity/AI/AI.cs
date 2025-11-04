@@ -1,4 +1,5 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Actor), typeof(AStar))]
@@ -19,4 +20,18 @@ public class AI : MonoBehaviour
         Action.MovementAction(GetComponent<Actor>(), direction);
     }
 
+    public virtual AIState SaveState() => new AIState();
+}
+
+[System.Serializable]
+public class AIState
+{
+    [SerializeField] private string type;
+
+    public string Type { get => type; set => type = value; }
+
+    public AIState(string type = "")
+    {
+        this.type = type;
+    }
 }
