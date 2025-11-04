@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Runtime.Hosting;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,7 +12,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!SaveManager.instance.HasSaveAvailable())
         {
-            continueButon.interactable = false;
+            continueButton.interactable = false;
         }
         else
         {
@@ -39,6 +38,7 @@ public class MainMenu : MonoBehaviour
 
     public void QuitGame()
     {
-        ApplicationActivator.Quit();
+        UnityEngine.Debug.Log("Quit Called! (works in build, not in unity editor <3");
+        Application.Quit();
     }
 }

@@ -11,7 +11,7 @@ public class Entity : MonoBehaviour
     {
         if (GetComponent<Player>())
         {
-            AddToGameManager().instance.InsertEntity(this, 0);
+            GameManager.instance.InsertEntity(this, 0);
         }
         else
         {
@@ -46,11 +46,11 @@ public class EntityState
 
     public EntityType Type { get => type; set => type = value; }
     public string Name { get => name; set => name = value; }
-    public bool BlocksMovement { get => blocksMovement; set => BlocksMovement = value; }
+    public bool BlocksMovement { get => blocksMovement; set => blocksMovement = value; }
     public bool IsVisible { get => isVisible; set => isVisible = value; }
     public Vector3 Position { get => position; set => position = value; }
 
-    public EntityState(EntityType type = EntityType.Other, string name = "", bool blocksMovement = false, Vector3 position = new Vector3())
+    public EntityState(EntityType type = EntityType.Other, string name = "", bool blocksMovement = false, bool isVisible = false, Vector3 position = new Vector3())
     {
         this.type = type;
         this.name = name;

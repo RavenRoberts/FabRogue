@@ -30,9 +30,9 @@ public class Actor : Entity
             inventory = GetComponent<Inventory>();
         }
 
-        if (GetComponent<fighter>())
+        if (GetComponent<Fighter>())
         {
-            fighter = GetComponent<fighter>();
+            fighter = GetComponent<Fighter>();
         }
     }
 
@@ -99,12 +99,12 @@ public class Actor : Entity
 
         if (!isAlive)
         {
-            AddToGameManager().instance.RemoveActor(this);
+            GameManager.instance.RemoveActor(this);
         }
 
         if (!state.IsVisible)
         {
-            GetComponent<SpriteRenderer>().enabled = falst;
+            GetComponent<SpriteRenderer>().enabled = false;
         }
 
         if (state.CurrentAI != null)
@@ -117,7 +117,7 @@ public class Actor : Entity
             {
                 aI = gameObject.AddComponent<ConfusedEnemy>();
 
-                ConfusedState confusedState = state.CurrentAI as confusedState;
+                ConfusedState confusedState = state.CurrentAI as ConfusedState;
                 ((ConfusedEnemy)aI).LoadState(confusedState);
             }
         }
