@@ -194,11 +194,13 @@ public class GameManager : MonoBehaviour
         while (entityState < entityStates.Count)
         {
             yield return new WaitForEndOfFrame();
-            string entityName = entityStates[entityState].Name.Contains("Remains of") ?
-            entityStates[entityState].Name.Substring(entityStates[entityState].Name.LastIndexOf(' ') + 1) : entityStates[entityState].Name;
+
 
             if (entityStates[entityState].Type == EntityState.EntityType.Actor)
             {
+                string entityName = entityStates[entityState].Name.Contains("Remains of") ?
+                    entityStates[entityState].Name.Substring(entityStates[entityState].Name.LastIndexOf(' ') + 1) : entityStates[entityState].Name;
+
                 ActorState actorState = entityStates[entityState] as ActorState;
 
                 if (entityName == "Player" && !canPlacePlayer)
@@ -215,6 +217,9 @@ public class GameManager : MonoBehaviour
             }
             else if (entityStates[entityState].Type == EntityState.EntityType.Item)
             {
+                string entityName = entityStates[entityState].Name.Contains("(E)") ?
+                    entityStates[entityState].Name.Replace(" (E)", "") : entityStates[entityState].Name;
+
                 ItemState itemState = entityStates[entityState] as ItemState;
 
                 if (itemState.Parent == "Player" && !canPlacePlayer)

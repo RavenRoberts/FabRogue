@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 627981669234461007}
   - component: {fileID: -6194782333776768822}
   - component: {fileID: -7655183845549420151}
+  - component: {fileID: -8079714684436387694}
   m_Layer: 0
   m_Name: Troll
   m_TagString: Untagged
@@ -113,6 +114,7 @@ MonoBehaviour:
   fieldOfView: []
   aI: {fileID: -6194782333776768822}
   inventory: {fileID: 0}
+  equipment: {fileID: -8079714684436387694}
   fighter: {fileID: -8804623019734845695}
   level: {fileID: -7655183845549420151}
 --- !u!114 &-8804623019734845695
@@ -129,8 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fighter
   maxHp: 16
   hp: 16
-  defense: 2
-  power: 4
+  baseDefense: 1
+  basePower: 4
   target: {fileID: 0}
 --- !u!114 &627981669234461007
 MonoBehaviour:
@@ -177,3 +179,17 @@ MonoBehaviour:
   levelUpBase: 200
   levelUpFactor: 150
   xpGiven: 100
+--- !u!114 &-8079714684436387694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9199910914733307333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c35598c0bc198b45997634dddb19cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Equipment
+  weapon: {fileID: 0}
+  armor: {fileID: 0}
