@@ -135,7 +135,7 @@ MonoBehaviour:
   maxHp: 16
   hp: 16
   baseDefense: 1
-  basePower: 4
+  basePower: 5
   target: {fileID: 0}
 --- !u!114 &627981669234461007
 MonoBehaviour:

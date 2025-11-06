@@ -164,10 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 55
-  hp: 55
+  maxHp: 50
+  hp: 50
   baseDefense: 0
-  basePower: 2
+  basePower: 4
   target: {fileID: 0}
 --- !u!114 &6694527197386572942
 MonoBehaviour:
@@ -213,7 +213,7 @@ MonoBehaviour:
   xpToNextLevel: 350
   levelUpBase: 200
   levelUpFactor: 150
-  xpGiven: 30
+  xpGiven: 80
 --- !u!114 &-2747349118493138835
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,8 +34,6 @@ sealed class ProcGen : MonoBehaviour
     {
         new Tuple<int, string, int>(1, "Orc", 80),
         new Tuple<int, string, int>(1, "Slime", 20),
-        new Tuple<int, string, int>(1, "Box", 40),
-        new Tuple<int, string, int>(1, "Smaller Box", 60),
         new Tuple<int, string, int>(3, "Troll", 15),
         new Tuple<int, string, int>(5, "Troll", 30),
         new Tuple<int, string, int>(7, "Troll", 60),
