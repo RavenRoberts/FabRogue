@@ -53,7 +53,11 @@ public class Actor : Entity
 
     void Start()
     {
-        AddToGameManager();
+        if (!GameManager.instance.Actors.Contains(this))
+        {
+            AddToGameManager();
+        }
+
 
         if (isAlive)
         {
@@ -63,6 +67,11 @@ public class Actor : Entity
         else if (fighter != null)
         {
             fighter.Die();
+        }
+
+        if (Size.x > 1 || Size.y > 1)
+        {
+            OccupiedTiles = GetOccupiedTiles();
         }
 
 
@@ -120,7 +129,7 @@ public class Actor : Entity
 
         if (!state.IsVisible)
         {
-            GetComponent<SpriteRenderer>().enabled = false;
+            SpriteRenderer.enabled = false;
         }
 
         if (state.CurrentAI != null)

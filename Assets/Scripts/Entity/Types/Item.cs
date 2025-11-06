@@ -15,7 +15,13 @@ public class Item : Entity
         }
     }
 
-    void Start() => AddToGameManager();
+    void Start()
+    {
+        if (!GameManager.instance.Entities.Contains(this))
+        {
+            AddToGameManager();
+        }
+    }
 
     public override EntityState SaveState() => new ItemState(
         name: name,
@@ -29,7 +35,7 @@ public class Item : Entity
     {
         if (!state.IsVisible)
         {
-            GetComponent<SpriteRenderer>().enabled = false;
+            SpriteRenderer.enabled = false;
         }
 
         if (state.Parent != "")

@@ -26,7 +26,10 @@ public class AStar : MonoBehaviour {
     }
     Vector2 stepDirection = new Vector2(path.Peek().x - start.x, path.Peek().y - start.y);
 
-    if (GameManager.instance.GetActorAtLocation(transform.position + (Vector3)stepDirection)) {
+
+        Actor actor = GameManager.instance.GetActorAtLocation(transform.position + (Vector3)stepDirection);
+    if (actor != null && actor != GetComponent<Actor>()) 
+    {
       return Vector2.zero;
     }
 

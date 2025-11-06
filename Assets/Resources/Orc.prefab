@@ -109,6 +109,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Actor
   blocksMovement: 1
+  spriteRenderer: {fileID: 5252565575550520459}
+  size: {x: 1, y: 1}
+  occupiedTiles: []
   isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []

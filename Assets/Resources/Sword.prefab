@@ -105,6 +105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   blocksMovement: 0
+  spriteRenderer: {fileID: 8042776917614080047}
+  size: {x: 1, y: 1}
+  occupiedTiles: []
   consumable: {fileID: 0}
   equippable: {fileID: -1122466473024215272}
 --- !u!114 &-1122466473024215272

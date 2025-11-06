@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -128,6 +129,11 @@ public class GameManager : MonoBehaviour
         entities.Remove(entity);
     }
 
+    public void DestroyEntity(Entity entity)
+    {
+        Destroy(entity.gameObject);
+    }
+
     public void AddActor(Actor actor)
     {
         actors.Add(actor);
@@ -153,14 +159,48 @@ public class GameManager : MonoBehaviour
 
     public Actor GetActorAtLocation(Vector3 location)
     {
-        foreach (Actor actor in Actors)
+        foreach (Actor actor in actors)
         {
-            if (actor.BlocksMovement && actor.transform.position == location)
+            if (actor.Size.x == 1 && actor.Size.y == 1)
             {
-                return actor;
+                if (actor.transform.position == location)
+                {
+                    return actor;
+                }
+            }
+            else
+            {
+                if (actor.OccupiedTiles.Contains(location))
+                {
+                    return actor;
+                }
             }
         }
         return null;
+    }
+
+    public Actor[] GetActorsAtLocation(Vector3 location)
+    {
+        List<Actor> actorsAtLocation = new List<Actor>();
+
+        foreach (Actor actor in actors)
+        {
+            if (actor.Size.x == 1 && actor.Size.y == 1)
+            {
+                if (actor.transform.position == location)
+                {
+                    actorsAtLocation.Add(actor);
+                }
+            }
+            else
+            {
+                if (actor.OccupiedTiles.Contains(location))
+                {
+                    actorsAtLocation.Add(actor);
+                }
+            }
+        }
+        return actorsAtLocation.ToArray();
     }
 
     private float SetTime() => baseTime / actors.Count;

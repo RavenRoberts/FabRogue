@@ -562,8 +562,6 @@ MonoBehaviour:
   roomMaxSize: 10
   roomMinSize: 6
   maxRooms: 30
-  maxMonstersPerRoom: 2
-  maxItemsPerRoom: 2
   floorTile: {fileID: 11400000, guid: 4c894dc0f8099a04d98fd5a03ec29181, type: 2}
   wallTile: {fileID: 11400000, guid: 6c1959869264fc94c94d641a5c8c25c7, type: 2}
   fogTile: {fileID: 11400000, guid: 597168f05e9694042a057c302a08d97b, type: 2}
@@ -1557,6 +1555,14 @@ PrefabInstance:
     - target: {fileID: 8004776872010711538, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -480
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612436882366514510, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -737
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612436882366514510, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -499
       objectReference: {fileID: 0}
     - target: {fileID: 8699389413377233518, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchorMax.y

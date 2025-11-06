@@ -33,6 +33,9 @@ sealed class ProcGen : MonoBehaviour
     private List<Tuple<int, string, int>> monsterChances = new List<Tuple<int, string, int>>
     {
         new Tuple<int, string, int>(1, "Orc", 80),
+        new Tuple<int, string, int>(1, "Slime", 20),
+        new Tuple<int, string, int>(1, "Box", 40),
+        new Tuple<int, string, int>(1, "Smaller Box", 60),
         new Tuple<int, string, int>(3, "Troll", 15),
         new Tuple<int, string, int>(5, "Troll", 30),
         new Tuple<int, string, int>(7, "Troll", 60),
@@ -137,10 +140,24 @@ sealed class ProcGen : MonoBehaviour
 
         //add player to the first room
         Vector3Int playerPos = (Vector3Int)rooms[0].RandomPoint();
+        int maxAttempts = 10, attempts = 0;
 
-        while (GameManager.instance.GetActorAtLocation(playerPos) is not null)
+        while (GameManager.instance.GetActorAtLocation(new Vector2(playerPos.x + 0.5f, playerPos.y + 0.5f)) is not null)
         {
             playerPos = (Vector3Int)rooms[0].RandomPoint();
+            if (attempts >= maxAttempts)
+            {
+                Actor actor = GameManager.instance.GetActorAtLocation(new Vector2(playerPos.x + 0.5f, playerPos.y + 0.5f));
+
+                if (actor is not null)
+                {
+                    GameManager.instance.RemoveActor(actor);
+                    GameManager.instance.RemoveEntity(actor);
+                    GameManager.instance.DestroyEntity(actor);
+                }
+                break;
+            }
+            attempts++;
         }
 
         MapManager.instance.FloorMap.SetTile(playerPos, MapManager.instance.UpStairsTile);
@@ -242,6 +259,7 @@ sealed class ProcGen : MonoBehaviour
 
     private void PlaceEntities(RectangularRoom newRoom, int floorNumber)
     {
+        int maxAttempts = 10;
         int numberOfMonsters = UnityRandom.Range(0, GetMaxValueForFloor(maxMonstersByFloor, floorNumber) + 1);
         int numberOfItems = UnityRandom.Range(0, GetMaxValueForFloor(maxItemsByFloor, floorNumber) + 1);
 
@@ -252,14 +270,45 @@ sealed class ProcGen : MonoBehaviour
 
         foreach (string entityName in entityNames)
         {
-            Vector3Int entityPos = (Vector3Int)newRoom.RandomPoint();
+            Vector2Int entityPos = Vector2Int.zero;
+            Entity entity = MapManager.instance.CreateEntity(entityName, entityPos).GetComponent<Entity>();
+            bool canPlace = false;
 
-            while (GameManager.instance.GetActorAtLocation(entityPos) is not null)
+            for (int attempts = 0; attempts < maxAttempts; attempts++)
             {
-                entityPos = (Vector3Int)newRoom.RandomPoint();
+                entityPos = newRoom.RandomPoint();
+                Vector2 entityPosFloat = new Vector3(entityPos.x + 0.5f, entityPos.y + 0.5f);
+
+                if (entity.Size.x > 1 || entity.Size.y > 1)
+                {
+                    entity.transform.position = entityPosFloat;
+                    entity.OccupiedTiles = entity.GetOccupiedTiles();
+
+                    canPlace = entity.OccupiedTiles.All(pos => MapManager.instance.IsValidPosition(pos)
+                                    && GameManager.instance.GetActorsAtLocation(pos).Length <= 1);
+                    if (canPlace)
+                    {
+                        break;
+                    }
+                }
+                else if (GameManager.instance.GetActorAtLocation(entityPosFloat) == null)
+                {
+                    entity.transform.position = entityPosFloat;
+                    canPlace = true;
+                    break;
+                }
             }
 
-            MapManager.instance.CreateEntity(entityName, (Vector2Int)entityPos);
+            if (!canPlace)
+            {
+                if (entity.GetComponent<Actor>() is not null)
+                {
+                    GameManager.instance.RemoveActor(entity.GetComponent<Actor>());
+                }
+
+                GameManager.instance.RemoveEntity(entity);
+                GameManager.instance.DestroyEntity(entity);
+            }
         }
     }
 }

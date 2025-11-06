@@ -110,6 +110,16 @@ public class MapManager : MonoBehaviour
     {
         GameObject entityObject = Instantiate(Resources.Load<GameObject>($"{entity}"), new Vector3(position.x + 0.5f, position.y + 0.5f, 0), Quaternion.identity);
         entityObject.name = entity;
+
+        if (entityObject.GetComponent<Actor>() is not null)
+        {
+            entityObject.GetComponent<Actor>().AddToGameManager();
+        }
+        else if (entityObject.GetComponent<Item>() is not null)
+        {
+            entityObject.GetComponent<Item>().AddToGameManager();
+        }
+
         return entityObject;
     }
 
@@ -145,16 +155,30 @@ public class MapManager : MonoBehaviour
                 continue;
             }
 
-            Vector3Int entityPosition = floorMap.WorldToCell(entity.transform.position);
+            bool isVisible = false;
+            Vector3Int entityPosition = Vector3Int.zero;
 
-            if (visibleTiles.Contains(entityPosition))
+            if (entity.Size.x > 1 || entity.Size.y > 1)
             {
-                entity.GetComponent<SpriteRenderer>().enabled = true;
+                foreach (Vector3 pos in entity.OccupiedTiles)
+                {
+                    entityPosition = floorMap.WorldToCell(pos);
+                    if (visibleTiles.Contains(entityPosition))
+                    {
+                        isVisible = true;
+                        break;
+                    }
+                }
             }
             else
             {
-                entity.GetComponent<SpriteRenderer>().enabled = false;
+                entityPosition = floorMap.WorldToCell(entity.transform.position);
+                if (visibleTiles.Contains(entityPosition))
+                {
+                    isVisible = true;
+                }
             }
+            entity.SpriteRenderer.enabled = isVisible;
         }
     }
 

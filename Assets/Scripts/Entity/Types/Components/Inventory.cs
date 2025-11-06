@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
     {
         items.Remove(item);
         item.transform.SetParent(null);
-        item.GetComponent<SpriteRenderer>().enabled = true;
+        item.SpriteRenderer.enabled = true;
         item.AddToGameManager();
         UIManager.instance.AddMessage($"You dropped the {item.name}.", "#ff0000");
     }
