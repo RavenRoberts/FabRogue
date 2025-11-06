@@ -41,6 +41,8 @@ sealed class ProcGen : MonoBehaviour
         new Tuple<int, string, int>(7, "Troll", 60),
     };
 
+    private readonly HashSet<Vector3Int> tunnelCoords = new();
+
     public int GetMaxValueForFloor(List<Tuple<int, int>> values, int floor)
     {
         int currentValue = 0;
@@ -135,6 +137,14 @@ sealed class ProcGen : MonoBehaviour
 
             rooms.Add(newRoom);
         }
+
+       //add doors to the rooms
+
+       foreach (RectangularRoom room in rooms)
+        {
+            PlaceDoor(room, rooms);
+        }
+
         //add stairs to the last room
         MapManager.instance.FloorMap.SetTile((Vector3Int)rooms[rooms.Count - 1].RandomPoint(), MapManager.instance.DownStairsTile);
 
@@ -180,8 +190,84 @@ sealed class ProcGen : MonoBehaviour
             playerActor.Equipment.EquipToSlot("Weapon", starterWeapon, false);
             playerActor.Equipment.EquipToSlot("Armor", starterArmor, false);
         }
+    }
 
+    private void PlaceDoor(RectangularRoom room, List<RectangularRoom> allRooms)
+    {
+        var wallPositions = room.GetWallPositions();
 
+        foreach (var pos in wallPositions)
+        {
+            Vector3Int tilePos = new Vector3Int(pos.x, pos.y, 0);
+
+            if (IsAdjacentToFloor(tilePos) && !IsPartOfAnotherRoom(tilePos, allRooms, room) && !IsAdjacentToDoor(tilePos))
+            {
+                //remove the floor tile
+                MapManager.instance.FloorMap.SetTile(tilePos, null);
+                //remove wall tile
+                MapManager.instance.ObstacleMap.SetTile(tilePos, null);
+                //add the door tile
+                MapManager.instance.InteractableMap.SetTile(tilePos, MapManager.instance.ClosedDoor);
+            }
+        }
+    }
+
+    private bool IsAdjacentToFloor(Vector3Int pos)
+    {
+        var adjacentTiles = new Vector3Int[]
+        {
+            pos + Vector3Int.up,
+            pos + Vector3Int.down,
+            pos + Vector3Int.left,
+            pos + Vector3Int.right,
+        };
+
+        bool isHorizontalCorridor = MapManager.instance.FloorMap.GetTile(adjacentTiles[2]) && MapManager.instance.FloorMap.GetTile(adjacentTiles[3]);
+        bool isVerticalCorridor = MapManager.instance.FloorMap.GetTile(adjacentTiles[0]) && MapManager.instance.FloorMap.GetTile(adjacentTiles[1]);
+
+        if (isHorizontalCorridor || isVerticalCorridor)
+        {
+            Vector3Int orthogonalDirection = isHorizontalCorridor ? adjacentTiles[0] : adjacentTiles[2];
+            Vector3Int oppositeDirection = isHorizontalCorridor ? adjacentTiles[1] : adjacentTiles[3];
+
+            if (!MapManager.instance.FloorMap.GetTile(orthogonalDirection) && !MapManager.instance.FloorMap.GetTile(oppositeDirection))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsPartOfAnotherRoom(Vector3Int pos, List<RectangularRoom> allRooms, RectangularRoom currentRoom)
+    {
+        foreach (RectangularRoom room in allRooms)
+        {
+            if (room != currentRoom && room.GetBoundsInt().Contains(pos))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool IsAdjacentToDoor(Vector3Int pos)
+    {
+        var adjacentTiles = new Vector3Int[]
+        {
+            pos + Vector3Int.up,
+            pos + Vector3Int.down,
+            pos + Vector3Int.left,
+            pos + Vector3Int.right
+        }; 
+        
+        foreach (Vector3Int tile in adjacentTiles)
+        {
+            if (MapManager.instance.InteractableMap.GetTile(tile) == MapManager.instance.ClosedDoor)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     ///<summary>
@@ -214,6 +300,7 @@ sealed class ProcGen : MonoBehaviour
         for (int i = 0; i < tunnelCoords.Count; i++)
         {
             SetFloorTile(new Vector3Int(tunnelCoords[i].x, tunnelCoords[i].y));
+            this.tunnelCoords.Add(new Vector3Int(tunnelCoords[i].x, tunnelCoords[i].y));
 
             //set floor tile
             MapManager.instance.FloorMap.SetTile(new Vector3Int(tunnelCoords[i].x, tunnelCoords[i].y, 0), MapManager.instance.FloorTile);

@@ -44,7 +44,9 @@ public class AStar : MonoBehaviour {
       for (int y = -1; y <= 1; y++) {
         Vector2Int neighbourPos = new Vector2Int(parentPosition.x - x, parentPosition.y - y);
         if (y != 0 || x != 0) {
-          if (neighbourPos != start && MapManager.instance.FloorMap.GetTile((Vector3Int)neighbourPos)) {
+
+                    bool hasFloorOrDoor = MapManager.instance.FloorMap.GetTile((Vector3Int)neighbourPos) || MapManager.instance.InteractableMap.GetTile((Vector3Int)neighbourPos);
+          if (neighbourPos != start && hasFloorOrDoor) {
             Node neighbour = GetNode(neighbourPos);
             neighbours.Add(neighbour);
           }
@@ -136,16 +138,6 @@ public class AStar : MonoBehaviour {
       return finalPath;
     }
     return null;
-  }
-
-  private Vector2 GetPath(Node currentNode) {
-    Stack<Vector2> path = new Stack<Vector2>();
-
-    while (currentNode.parent != null) {
-      path.Push(currentNode.position);
-      currentNode = currentNode.parent;
-    }
-    return path.Pop();
   }
 }
 

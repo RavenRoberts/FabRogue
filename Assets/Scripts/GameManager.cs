@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour
     [Header("Time")]
     [SerializeField] private float baseTime = 0.1f;
     [SerializeField] private float delayTime; //read-only
-    [SerializeField] private bool isPlayerTurn = true;
+
 
     [Header("Entities")]
+    [SerializeField] private bool isPlayerTurn = true;
     [SerializeField] private int actorNum = 0;
     [SerializeField] private List<Entity> entities;
     [SerializeField] private List<Actor> actors;

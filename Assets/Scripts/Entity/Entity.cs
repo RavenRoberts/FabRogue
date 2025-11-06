@@ -30,13 +30,14 @@ public class Entity : MonoBehaviour
     public void Move(Vector2 direction)
     {
         if (!CanMove(direction)) { return; }
-
         transform.position += (Vector3)direction;
 
         if (size.x > 1 || size.y > 1)
         {
             occupiedTiles = GetOccupiedTiles();
         }
+
+        MapManager.instance.UpdateTile(this);
     }
 
     private bool CanMove(Vector2 direction)
