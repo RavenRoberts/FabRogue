@@ -86,6 +86,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AbilityMain",
+                    "type": "Button",
+                    "id": "43e57185-68c7-4809-8c7d-afdb25c09555",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -328,6 +337,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Wait",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b02294ad-8ee9-4698-8e1a-ecbce7431fc5",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arrow Keys",
+                    "action": "AbilityMain",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

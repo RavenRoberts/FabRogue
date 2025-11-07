@@ -168,6 +168,30 @@ static public class Action
         GameManager.instance.EndTurn();
     }
 
+    static public void UseAbilityAction(Actor caster, int slotIndex)
+    {
+        Ability ability = caster.AbilitySlots.GetAbility(slotIndex);
+
+        if (ability == null)
+        {
+            UIManager.instance.AddMessage($"No ability equipped in slot {slotIndex + 1}.", "#808080");
+            return;
+        }
+
+        if (ability.RequiresTarget)
+        {
+            caster.GetComponent<Player>().ToggleTargetMode(ability);
+            return;
+        }
+
+        bool activated = ability.Activate(caster);
+
+        if (activated)
+        {
+            GameManager.instance.EndTurn();
+        }
+    }
+
     static public void CastAction(Actor consumer, Actor target, Consumable consumable)
     {
         bool castSuccess = consumable.Cast(consumer, target);

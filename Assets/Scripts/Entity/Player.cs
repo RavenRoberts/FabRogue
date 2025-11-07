@@ -11,8 +11,9 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     [SerializeField] private bool targetMode; //read only
     [SerializeField] private bool isSingleTarget; //read only
     [SerializeField] private GameObject targetObject;
+    [SerializeField] private Ability activeAbility;
 
-    private void Awake() =>controls = new Controls();
+    private void Awake() => controls = new Controls();
 
     private void OnEnable()
     {
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
             if (targetMode)
             {
                 ToggleTargetMode();
+                return;
             }
             if (!UIManager.instance.IsEscapeMenuOpen && !UIManager.instance.IsMenuOpen)
             {
@@ -112,6 +114,19 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
+    public void OnAbilityMain(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (CanAct())
+            {
+                Actor actor = GetComponent<Actor>();
+
+                Action.UseAbilityAction(actor, 0);
+            }
+        }
+    }
+
     public void OnDrop(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -134,6 +149,10 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     {
         if (context.performed)
         {
+            Actor actor = GetComponent<Actor>();
+            Inventory inv = actor.Inventory;
+            Ability activeAbility = this.activeAbility;
+
             if (targetMode)
             {
                 if (isSingleTarget)
@@ -142,7 +161,22 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
                     if (target != null)
                     {
-                        Action.CastAction(GetComponent<Actor>(), target, GetComponent<Inventory>().SelectedConsumable);
+                        if (inv.SelectedConsumable != null)
+                        {
+                            Action.CastAction(actor, target, inv.SelectedConsumable);
+                        }
+                        else if (activeAbility != null)
+                        {
+                            bool success = activeAbility.Cast(actor, target.transform.position);
+
+                            if (success)
+                            {
+                                GameManager.instance.EndTurn();
+                                ToggleTargetMode(false);
+                                this.activeAbility = null;
+                            }
+                        }
+                        
                     }
                 }
                 else
@@ -151,7 +185,28 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
 
                     if (targets != null)
                     {
-                        Action.CastAction(GetComponent<Actor>(), targets, GetComponent<Inventory>().SelectedConsumable);
+                        if (inv.SelectedConsumable != null)
+                        {
+                            Action.CastAction(GetComponent<Actor>(), targets, GetComponent<Inventory>().SelectedConsumable);
+                        }
+                        else if (activeAbility != null)
+                        {
+                            bool anySuccess = false;
+
+                            foreach (Actor t in targets)
+                            {
+                                if (activeAbility.Cast(actor, t.transform.position))
+                                {
+                                    anySuccess = true;
+                                }
+                            }
+                            if (anySuccess)
+                            {
+                                GameManager.instance.EndTurn();
+                                ToggleTargetMode(false);
+                                this.activeAbility = null;
+                            }
+                        }
                     }
                 }
             }
@@ -208,6 +263,31 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
+    public void ToggleTargetMode(Ability ability)
+    {
+        targetMode = !targetMode;
+
+        if (!targetMode)
+        {
+            targetObject.transform.GetChild(0).gameObject.SetActive(false);
+            targetObject.SetActive(false);
+            activeAbility = null;
+            GetComponent<Inventory>().SelectedConsumable = null;
+            return;
+        }
+
+        activeAbility = ability;
+
+        if (targetObject.transform.position != transform.position)
+            targetObject.transform.position = transform.position;
+
+        isSingleTarget = ability.Radius <= 1;
+        targetObject.transform.GetChild(0).localScale = Vector3.one * (ability.Radius + 1);
+        targetObject.transform.GetChild(0).gameObject.SetActive(!isSingleTarget);
+
+        targetObject.SetActive(true);        
+    }
+
     private void FixedUpdate()
     {
         if (!UIManager.instance.IsMenuOpen && !targetMode)
@@ -224,35 +304,42 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         else if (Keyboard.current.numpad9Key.isPressed) direction = new Vector2(1, 1);
         else if (Keyboard.current.numpad1Key.isPressed) direction = new Vector2(-1, -1);
         else if (Keyboard.current.numpad3Key.isPressed) direction = new Vector2(1, -1);
-
-        UnityEngine.Debug.Log(direction);
         Vector2 roundedDirection = new Vector2(Mathf.Round(direction.x), Mathf.Round(direction.y));
         Vector3 futurePosition;
 
-        if (targetMode)
+        if (targetMode && activeAbility != null)
         {
             futurePosition = targetObject.transform.position + (Vector3)roundedDirection;
-        }
-        else
-        {
-            futurePosition = transform.position + (Vector3)roundedDirection;
-        }
 
-        if (targetMode)
-        {
+            Vector3 offset = futurePosition - transform.position;
+
+            int dx = Mathf.RoundToInt(offset.x);
+            int dy = Mathf.RoundToInt(offset.y);
+            int distance = Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy));
+
+            if (distance > activeAbility.Range)
+            {
+                float scale = (float)activeAbility.Range / distance;
+                dx = Mathf.RoundToInt(dx * scale);
+                dy = Mathf.RoundToInt(dy * scale);
+
+            }
+            futurePosition = transform.position + new Vector3(dx, dy, 0);
+
             Vector3Int targetGridPosition = MapManager.instance.FloorMap.WorldToCell(futurePosition);
 
-            if (MapManager.instance.IsValidPosition(futurePosition) && GetComponent<Actor>().FieldOfView.Contains(targetGridPosition))
+            if (MapManager.instance.IsValidPosition(futurePosition) &&
+                GetComponent<Actor>().FieldOfView.Contains(targetGridPosition))
             {
                 targetObject.transform.position = futurePosition;
             }
         }
         else
         {
+            futurePosition = transform.position + (Vector3)roundedDirection;
             moveKeyDown = Action.BumpAction(GetComponent<Actor>(), roundedDirection); //if we bump into an entity, movekeyheld is set to false
 
         }
-
     }
 
     private bool CanAct()

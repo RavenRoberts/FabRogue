@@ -172,6 +172,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AbilityMain"",
+                    ""type"": ""Button"",
+                    ""id"": ""43e57185-68c7-4809-8c7d-afdb25c09555"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -416,6 +425,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""action"": ""Wait"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b02294ad-8ee9-4698-8e1a-ecbce7431fc5"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Arrow Keys"",
+                    ""action"": ""AbilityMain"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -450,6 +470,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Confirm = m_Player.FindAction("Confirm", throwIfNotFound: true);
         m_Player_Info = m_Player.FindAction("Info", throwIfNotFound: true);
         m_Player_Wait = m_Player.FindAction("Wait", throwIfNotFound: true);
+        m_Player_AbilityMain = m_Player.FindAction("AbilityMain", throwIfNotFound: true);
     }
 
     ~@Controls()
@@ -539,6 +560,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Confirm;
     private readonly InputAction m_Player_Info;
     private readonly InputAction m_Player_Wait;
+    private readonly InputAction m_Player_AbilityMain;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -586,6 +608,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Wait".
         /// </summary>
         public InputAction @Wait => m_Wrapper.m_Player_Wait;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/AbilityMain".
+        /// </summary>
+        public InputAction @AbilityMain => m_Wrapper.m_Player_AbilityMain;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -639,6 +665,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Wait.started += instance.OnWait;
             @Wait.performed += instance.OnWait;
             @Wait.canceled += instance.OnWait;
+            @AbilityMain.started += instance.OnAbilityMain;
+            @AbilityMain.performed += instance.OnAbilityMain;
+            @AbilityMain.canceled += instance.OnAbilityMain;
         }
 
         /// <summary>
@@ -677,6 +706,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Wait.started -= instance.OnWait;
             @Wait.performed -= instance.OnWait;
             @Wait.canceled -= instance.OnWait;
+            @AbilityMain.started -= instance.OnAbilityMain;
+            @AbilityMain.performed -= instance.OnAbilityMain;
+            @AbilityMain.canceled -= instance.OnAbilityMain;
         }
 
         /// <summary>
@@ -793,5 +825,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnWait(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "AbilityMain" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAbilityMain(InputAction.CallbackContext context);
     }
 }
