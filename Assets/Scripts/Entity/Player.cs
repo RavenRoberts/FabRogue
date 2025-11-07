@@ -101,6 +101,17 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
+    public void OnWait(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (CanAct())
+            {
+                Action.WaitAction();
+            }
+        }
+    }
+
     public void OnDrop(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -209,6 +220,12 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
     private void Move()
     {
         Vector2 direction = controls.Player.Movement.ReadValue<Vector2>();
+        if (Keyboard.current.numpad7Key.isPressed) direction = new Vector2(-1, 1);
+        else if (Keyboard.current.numpad9Key.isPressed) direction = new Vector2(1, 1);
+        else if (Keyboard.current.numpad1Key.isPressed) direction = new Vector2(-1, -1);
+        else if (Keyboard.current.numpad3Key.isPressed) direction = new Vector2(1, -1);
+
+        UnityEngine.Debug.Log(direction);
         Vector2 roundedDirection = new Vector2(Mathf.Round(direction.x), Mathf.Round(direction.y));
         Vector3 futurePosition;
 
