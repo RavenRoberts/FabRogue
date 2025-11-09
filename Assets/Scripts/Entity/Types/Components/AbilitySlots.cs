@@ -16,7 +16,7 @@ public class AbilitySlots : MonoBehaviour
 
     private void Start()//i think this should autoequip?
     {
-        GetComponent<AbilitySlots>().EquipAbility(0, GetComponent<Drain>());
+        GetComponent<AbilitySlots>().EquipAbility(0, GetComponent<Swallow>());
     }
 
     public Ability GetAbility(int slotIndex)

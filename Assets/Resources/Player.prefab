@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5584093297530255128}
   - component: {fileID: -2823092843041273790}
   - component: {fileID: 4248730666713744933}
-  - component: {fileID: -8361660972930753075}
+  - component: {fileID: -2361352237876395044}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -132,6 +132,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3768180656701754500}
   size: {x: 1, y: 1}
   occupiedTiles: []
+  integrity: 0
+  nutrition: 0
   isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
@@ -139,6 +141,7 @@ MonoBehaviour:
   inventory: {fileID: 223632056598495259}
   abilitySlots: {fileID: 4248730666713744933}
   equipment: {fileID: -2823092843041273790}
+  digestiveTract: {fileID: 0}
   fighter: {fileID: -3878619934340393615}
   level: {fileID: 5584093297530255128}
 --- !u!114 &-3878619934340393615
@@ -218,7 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySlots
   equippedAbilities: []
---- !u!114 &-8361660972930753075
+--- !u!114 &-2361352237876395044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,9 +230,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4957274491260647867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b78c3597dbd1f8c429ab3313494ccfd5, type: 3}
+  m_Script: {fileID: 11500000, guid: 6863c22fa093bb94c84916b6dcbcb7af, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Drain
+  m_EditorClassIdentifier: Assembly-CSharp::Swallow
   magnitude: 0
   duration: 0
   radius: 1

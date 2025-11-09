@@ -26,13 +26,15 @@ sealed class ProcGen : MonoBehaviour
     private List<Tuple<int, string, int>> itemChances = new List<Tuple<int, string, int>>
     {
         new Tuple<int, string, int>(0, "Potion of Health", 35),
+        new Tuple<int, string, int>(0, "Apple", 60),
         new Tuple<int, string, int>(0, "Confusion Scroll", 10),
         new Tuple<int, string, int>(0, "Lightning Scroll", 25), new Tuple<int, string, int>(0, "Sword", 5),
         new Tuple<int, string, int>(0, "Fireball Scroll", 25), new Tuple<int, string, int>(0, "Chain Mail", 15),
     };
     private List<Tuple<int, string, int>> monsterChances = new List<Tuple<int, string, int>>
     {
-        new Tuple<int, string, int>(1, "Orc", 80),
+        new Tuple<int, string, int>(1, "Orc", 40),
+        new Tuple<int, string, int>(1, "Goblin", 60),
         new Tuple<int, string, int>(1, "Slime", 20),
         new Tuple<int, string, int>(0, "Troll", 15),
         new Tuple<int, string, int>(5, "Troll", 30),

@@ -19,7 +19,7 @@ public class Ability : MonoBehaviour
     public bool AffectsSelf { get => affectsSelf; set => affectsSelf = value; }
 
 
-    public virtual bool Activate(Actor caster)
+    public virtual bool Activate(Actor caster) // if the ability needs a target, open up target mode
     {
         if (requiresTarget)
         {
@@ -29,12 +29,13 @@ public class Ability : MonoBehaviour
         }
         return Cast(caster, caster.transform.position);
     }
+
     public virtual bool Cast(Actor caster, Vector3 targetPosition)
     {
-        List<Actor> targets = new List<Actor>();
+        List<Entity> targets = new List<Entity>();
 
         if (radius <= 1) {
-            Actor target = GameManager.instance.GetActorAtLocation(targetPosition);
+            Entity target = GameManager.instance.GetEntityAtLocation(targetPosition);
             if (target != null && target != caster)
             {
                 targets.Add(target);
@@ -47,11 +48,11 @@ public class Ability : MonoBehaviour
         else
         {
             Bounds bounds = new Bounds(targetPosition, Vector3.one * radius * 2);
-            foreach (Actor a in GameManager.instance.Actors)
+            foreach (Entity entity in GameManager.instance.Entities)
             {
-                if (bounds.Contains(a.transform.position) && (a != caster || affectsSelf))
+                if (bounds.Contains(entity.transform.position) && (entity != caster || affectsSelf))
                 {
-                    targets.Add(a);
+                    targets.Add(entity);
                 }
             }
         }
@@ -62,7 +63,7 @@ public class Ability : MonoBehaviour
             return false;
         }
 
-        foreach (Actor t in targets)
+        foreach (Entity t in targets)
         {
             ApplyEffect(caster, t);
         }
@@ -70,7 +71,7 @@ public class Ability : MonoBehaviour
         return true;
     }
 
-    protected virtual void ApplyEffect(Actor caster, Actor target)
+    protected virtual void ApplyEffect(Actor caster, Entity target)
     {
 
     }

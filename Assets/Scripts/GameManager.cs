@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        //Debug($"{entities[entityNum].name} ends its turn!"};
         if (actors[actorNum].GetComponent<Player>())
         {
             isPlayerTurn = false;
@@ -94,6 +93,15 @@ public class GameManager : MonoBehaviour
         else
         {
             actorNum++;
+        }
+
+        foreach (Actor actor in actors)
+        {
+            DigestionManager digestion = actor.GetComponent<DigestionManager>();
+            if (digestion != null)
+            {
+                digestion.TickDigestion();
+            }
         }
 
             StartCoroutine(TurnDelay());
@@ -202,6 +210,52 @@ public class GameManager : MonoBehaviour
             }
         }
         return actorsAtLocation.ToArray();
+    }
+
+    public Entity GetEntityAtLocation(Vector3 location)
+    {
+        foreach (Entity entity in entities)
+        {
+            if (entity.Size.x == 1 && entity.Size.y == 1)
+            {
+                if (entity.transform.position == location)
+                {
+                    return entity;
+                }
+            }
+            else
+            {
+                if (entity.OccupiedTiles.Contains(location))
+                {
+                    return entity;
+                }
+            }
+        }
+        return null;
+    }
+
+    public Entity[] GetEntitiesAtLocation(Vector3 location)
+    {
+        List<Entity> entitiesAtLocation = new List<Entity>();
+
+        foreach (Entity entity in entities)
+        {
+            if (entity.Size.x == 1 && entity.Size.y == 1)
+            {
+                if (entity.transform.position == location)
+                {
+                    entitiesAtLocation.Add(entity);
+                }
+            }
+            else
+            {
+                if (entity.OccupiedTiles.Contains(location))
+                {
+                    entitiesAtLocation.Add(entity);
+                }
+            }
+        }
+        return entitiesAtLocation.ToArray();
     }
 
     private float SetTime() => baseTime / actors.Count;

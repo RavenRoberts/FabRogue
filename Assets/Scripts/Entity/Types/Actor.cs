@@ -12,6 +12,7 @@ public class Actor : Entity
     [SerializeField] private Inventory inventory;
     [SerializeField] private AbilitySlots abilitySlots;
     [SerializeField] private Equipment equipment;
+    [SerializeField] private DigestiveTract digestiveTract;
     [SerializeField] private Fighter fighter;
     [SerializeField] private Level level;
     AdamMilVisibility algorithm;
@@ -21,6 +22,7 @@ public class Actor : Entity
     public Inventory Inventory { get => inventory; }
     public AbilitySlots AbilitySlots { get => abilitySlots; }
     public Equipment Equipment { get => equipment; }
+    public DigestiveTract DigestiveTract { get => digestiveTract;  }
     public AI AI { get => aI; set => aI = value; }
     public Fighter Fighter { get => fighter; set => fighter = value; }
     public Level Level { get => level; set => level = value; }
@@ -55,6 +57,10 @@ public class Actor : Entity
         if (GetComponent<Equipment>())
         {
             equipment = GetComponent<Equipment>();
+        }
+        if (GetComponent<DigestiveTract>())
+        {
+            digestiveTract = GetComponent<DigestiveTract>();
         }
     }
 

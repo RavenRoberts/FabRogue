@@ -9,7 +9,7 @@ public class Drain : Ability
 
     }
 
-    protected override void ApplyEffect(Actor caster, Actor target)
+    protected override void ApplyEffect(Actor caster, Entity target)
     {
         Fighter targetFighter = target.GetComponent<Fighter>();
         Fighter casterFighter = caster.GetComponent<Fighter>();
