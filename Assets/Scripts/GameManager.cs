@@ -137,7 +137,6 @@ public class GameManager : MonoBehaviour
         entity.gameObject.SetActive(false);
         entities.Remove(entity);
     }
-
     public void DestroyEntity(Entity entity)
     {
         Destroy(entity.gameObject);

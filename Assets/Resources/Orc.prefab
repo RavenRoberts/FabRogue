@@ -112,12 +112,16 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5252565575550520459}
   size: {x: 1, y: 1}
   occupiedTiles: []
+  integrity: 50
+  nutrition: 1
   isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
   aI: {fileID: -5121539719921142362}
   inventory: {fileID: 0}
+  abilitySlots: {fileID: 0}
   equipment: {fileID: -2747349118493138835}
+  digestiveTract: {fileID: 0}
   fighter: {fileID: 8565738878586325533}
   level: {fileID: 1791564697180652187}
 --- !u!114 &8565738878586325533

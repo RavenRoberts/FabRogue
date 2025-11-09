@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: -2823092843041273790}
   - component: {fileID: 4248730666713744933}
   - component: {fileID: -2361352237876395044}
+  - component: {fileID: 7904899720310799237}
+  - component: {fileID: -3512532768577816224}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -141,7 +143,7 @@ MonoBehaviour:
   inventory: {fileID: 223632056598495259}
   abilitySlots: {fileID: 4248730666713744933}
   equipment: {fileID: -2823092843041273790}
-  digestiveTract: {fileID: 0}
+  digestiveTract: {fileID: -3512532768577816224}
   fighter: {fileID: -3878619934340393615}
   level: {fileID: 5584093297530255128}
 --- !u!114 &-3878619934340393615
@@ -239,6 +241,35 @@ MonoBehaviour:
   range: 1
   requiresTarget: 1
   affectsSelf: 0
+--- !u!114 &7904899720310799237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56f8122490c7aa04fa47570db7f943f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigestionManager
+  digestiveTract: {fileID: -3512532768577816224}
+--- !u!114 &-3512532768577816224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269ba9393ea8c4848a3fe6abd27549d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DigestiveTract
+  owner: {fileID: 0}
+  stomachContents: []
+  intestineContents: []
+  acidity: 1
 --- !u!1 &6065228494201771905
 GameObject:
   m_ObjectHideFlags: 0

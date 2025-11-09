@@ -6,7 +6,7 @@ using SysRandom = System.Random;
 using UnityRandom = UnityEngine.Random;
 
 
-sealed class ProcGen : MonoBehaviour
+sealed class ProcGen
 {
     private List<Tuple<int, int>> maxItemsByFloor = new List<Tuple<int, int>>
     {

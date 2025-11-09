@@ -6,8 +6,8 @@ public class DigestionManager : MonoBehaviour
 
     [SerializeField] private DigestiveTract digestiveTract;
 
-    private Dictionary<Entity, int> stomachTimers = new Dictionary<Entity, int>();
-    private Dictionary<Entity, int> intestineTimers = new Dictionary<Entity, int>();
+    [SerializeField] private Dictionary<Entity, int> stomachTimers = new Dictionary<Entity, int>();
+    [SerializeField] private Dictionary<Entity, int> intestineTimers = new Dictionary<Entity, int>();
 
 
     private void Awake()
@@ -30,15 +30,14 @@ public class DigestionManager : MonoBehaviour
 
         foreach (var food in stomach)
         {
-            int timer = stomachTimers[food];
             if (!stomachTimers.ContainsKey(food))
             {
-                timer = food.Integrity;
+                stomachTimers[food] = food.Integrity;
             }
-            timer -= digestiveTract.Acidity;
+            stomachTimers[food] -= digestiveTract.Acidity;
             UIManager.instance.AddMessage($"The {food.name} melts in the heat of {digestiveTract.Owner.name}'s stomach", "#0BA10B");
 
-            if (timer <= 0)
+            if (stomachTimers[food] <= 0)
             {
                 digestiveTract.MoveToIntestine(food);
                 intestineTimers[food] = food.Integrity;
@@ -54,16 +53,15 @@ public class DigestionManager : MonoBehaviour
 
         foreach ( var food in intestine)
         {
-            int timer = intestineTimers[food];
             if (!intestineTimers.ContainsKey(food))
             {
-                timer = food.Integrity;
+                intestineTimers[food] = food.Integrity;
             }
-            timer -= digestiveTract.Acidity;
+            intestineTimers[food] -= digestiveTract.Acidity;
             digestiveTract.Owner.GetComponent<Fighter>().Heal(food.Nutrition);
             UIManager.instance.AddMessage($"The {food.name} is absorbed by {digestiveTract.Owner.name}'s greedy intestine", "#0BA10B");
 
-            if (timer <= 0)
+            if (intestineTimers[food] <= 0)
             {
                 digestiveTract.EmptyIntestine(food);
                 intestineTimers.Remove(food);

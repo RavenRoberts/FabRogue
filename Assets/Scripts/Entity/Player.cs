@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour, Controls.IPlayerActions
 {
@@ -144,7 +145,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
             }
         }
     }
-
+    /*
     public void OnConfirm(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -167,14 +168,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
                         }
                         else if (activeAbility != null)
                         {
-                            bool success = activeAbility.Cast(actor, target.transform.position);
-
-                            if (success)
-                            {
-                                GameManager.instance.EndTurn();
-                                ToggleTargetMode(false);
-                                this.activeAbility = null;
-                            }
+                            Action.CastAbilityAction(actor, target, activeAbility);
                         }
                         
                     }
@@ -208,6 +202,40 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
                             }
                         }
                     }
+                }
+            }
+            else if (CanAct())
+            {
+                Action.TakeStairsAction(GetComponent<Actor>());
+            }
+        }
+    }*/
+
+    public void OnConfirm(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Actor actor = (GetComponent<Actor>());
+            Inventory inv = actor.Inventory;
+            Ability activeAbility = this.activeAbility;
+
+            if (targetMode)
+            {
+                if (targetObject == null)
+                {
+                    UIManager.instance.AddMessage("No target selected.", "#808080");
+                    return;
+                }
+
+                Vector3 targetPos = targetObject.transform.position;
+
+                /*if (inv.SelectedConsumable != null)
+                {
+                    Action.CastAction(actor, targetPos, inv.SelectedConsumable)
+                }*///I have broken items :)
+                if (activeAbility != null)
+                {
+                    Action.CastAbilityAction(actor, targetPos, activeAbility);
                 }
             }
             else if (CanAct())

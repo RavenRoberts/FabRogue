@@ -192,6 +192,18 @@ static public class Action
         }
     }
 
+    static public void CastAbilityAction(Actor caster, Vector3 targetPosition, Ability ability)
+    {
+        bool success = ability.Cast(caster, targetPosition);
+
+        if (success)
+        {
+            caster.GetComponent<Player>().ToggleTargetMode(false);            
+            GameManager.instance.EndTurn();
+        }
+    }
+
+
     static public void CastAction(Actor consumer, Actor target, Consumable consumable)
     {
         bool castSuccess = consumable.Cast(consumer, target);

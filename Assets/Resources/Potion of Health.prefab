@@ -108,6 +108,8 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8042776917614080047}
   size: {x: 1, y: 1}
   occupiedTiles: []
+  integrity: 1
+  nutrition: 15
   consumable: {fileID: 5405293101734850032}
   equippable: {fileID: 0}
 --- !u!114 &5405293101734850032
