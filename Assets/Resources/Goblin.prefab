@@ -118,12 +118,19 @@ MonoBehaviour:
   fieldOfViewRange: 8
   fieldOfView: []
   aI: {fileID: -5121539719921142362}
+  level: {fileID: 1791564697180652187}
+  maxHp: 8
+  hp: 8
+  maxStamina: 0
+  stamina: 0
+  baseDefense: 0
+  basePower: 0
   inventory: {fileID: 0}
   abilitySlots: {fileID: 0}
   equipment: {fileID: -2747349118493138835}
   digestiveTract: {fileID: 0}
   fighter: {fileID: 8565738878586325533}
-  level: {fileID: 1791564697180652187}
+  target: {fileID: 0}
 --- !u!114 &8565738878586325533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,8 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 5
-  hp: 5
+  maxHp: 8
+  hp: 8
   baseDefense: 0
   basePower: 2
   target: {fileID: 0}

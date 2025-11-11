@@ -1,31 +1,126 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Actor : Entity
 {
     [SerializeField] private bool isAlive = true; //read only
+
+    [Header("AI Properties")]
     [SerializeField] private int fieldOfViewRange = 8;
     [SerializeField] private List<Vector3Int> fieldOfView = new List<Vector3Int>();
     [SerializeField] private AI aI;
+
+    [Header("Stats")]
+    [SerializeField] private Level level;
+    [SerializeField] private int maxHp, hp, maxStamina, stamina, baseDefense, basePower;
+
+    [Header("Containers")]
     [SerializeField] private Inventory inventory;
     [SerializeField] private AbilitySlots abilitySlots;
     [SerializeField] private Equipment equipment;
     [SerializeField] private DigestiveTract digestiveTract;
     [SerializeField] private Fighter fighter;
-    [SerializeField] private Level level;
+    [SerializeField] private Actor target;
+
     AdamMilVisibility algorithm;
 
     public bool IsAlive { get => isAlive; set => isAlive = value; }
     public List<Vector3Int> FieldOfView { get => fieldOfView; }
+    public Level Level { get => level; set => level = value; }
+    public int Hp
+    {
+        get => hp; set
+        {
+            hp = Mathf.Max(0, Mathf.Min(value, maxHp));
+
+            if (GetComponent<Player>())
+            {
+                UIManager.instance.SetHealth(hp, maxHp);
+            }
+
+            if (hp == 0)
+            {
+                Effects.Die(this);
+            }
+        }
+    }
+    public int MaxHp
+    {
+        get => maxHp; set
+        {
+            maxHp = value;
+            if (GetComponent<Player>())
+            {
+                UIManager.instance.SetHealthMax(maxHp);
+            }
+        }
+    }
+    public int Stamina
+    {
+        get => stamina; set
+        {
+            stamina = Mathf.Max(0, Mathf.Min(value, maxStamina));
+
+            if (GetComponent<Player>())
+            {
+                UIManager.instance.SetStamina(stamina, maxStamina);
+            }
+
+        }
+    }
+    public int MaxStamina
+    {
+        get => MaxStamina; set
+        {
+            MaxStamina = value;
+            if (GetComponent<Player>())
+            {
+                UIManager.instance.SetStaminaMax(MaxStamina);
+            }
+        }
+    }
+    public int BaseDefense { get => baseDefense; set => baseDefense = value; }
+    public int BasePower { get => basePower; set => basePower = value; }
+    public Actor Target { get => target; set => target = value; }
+
+    public int Power()
+    {
+        return basePower + PowerBonus();
+    }
+
+    public int Defense()
+    {
+        return baseDefense + DefenseBonus();
+    }
+
+    public int DefenseBonus()
+    {
+        if (GetComponent<Equipment>() is not null)
+        {
+            return GetComponent<Equipment>().DefenseBonus();
+        }
+
+        return 0;
+    }
+    public int PowerBonus()
+    {
+        if (GetComponent<Equipment>() is not null)
+        {
+            return GetComponent<Equipment>().PowerBonus();
+        }
+
+        return 0;
+    }
+
     public Inventory Inventory { get => inventory; }
     public AbilitySlots AbilitySlots { get => abilitySlots; }
     public Equipment Equipment { get => equipment; }
-    public DigestiveTract DigestiveTract { get => digestiveTract;  }
+    public DigestiveTract DigestiveTract { get => digestiveTract; }
     public AI AI { get => aI; set => aI = value; }
     public Fighter Fighter { get => fighter; set => fighter = value; }
-    public Level Level { get => level; set => level = value; }
+
 
     private void OnValidate()
     {
@@ -79,7 +174,7 @@ public class Actor : Entity
         }
         else if (fighter != null)
         {
-            fighter.Die();
+            Effects.Die(this);
         }
 
         if (Size.x > 1 || Size.y > 1)
@@ -87,7 +182,13 @@ public class Actor : Entity
             OccupiedTiles = GetOccupiedTiles();
         }
 
-
+        if (GetComponent<Player>())
+        {
+            UIManager.instance.SetHealthMax(maxHp);
+            UIManager.instance.SetHealth(hp, maxHp);
+            UIManager.instance.SetStaminaMax(maxStamina);
+            UIManager.instance.SetStamina(stamina, maxStamina);
+        }
 
     }
 

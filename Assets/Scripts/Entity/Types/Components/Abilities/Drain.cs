@@ -5,19 +5,18 @@ public class Drain : Ability
     private void Awake()
     {
         magnitude = 5;
-
-
+        cost = 5;
     }
 
     protected override void ApplyEffect(Actor caster, Entity target)
     {
-        Fighter targetFighter = target.GetComponent<Fighter>();
-        Fighter casterFighter = caster.GetComponent<Fighter>();
+        Actor prey = target.GetComponent<Actor>();
 
-        int drainAmount = Mathf.Min(magnitude, targetFighter.Hp);
+        int drainAmount = Mathf.Min(magnitude, prey.Hp);
 
-        targetFighter.Hp -= drainAmount;
-        casterFighter.Hp += drainAmount;
+        Effects.DamageHealth(prey, drainAmount);
+        Effects.RestoreHealth(caster, drainAmount);
+
 
         UIManager.instance.AddMessage($"{caster.name} drains {drainAmount} HP from {target.name}!", "#ff0000");
     }

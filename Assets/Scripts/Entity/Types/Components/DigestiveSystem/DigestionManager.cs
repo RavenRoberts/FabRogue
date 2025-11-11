@@ -58,7 +58,8 @@ public class DigestionManager : MonoBehaviour
                 intestineTimers[food] = food.Integrity;
             }
             intestineTimers[food] -= digestiveTract.Acidity;
-            digestiveTract.Owner.GetComponent<Fighter>().Heal(food.Nutrition);
+            Effects.RestoreHealth(digestiveTract.Owner, food.Nutrition);
+            digestiveTract.Owner.Stamina += food.Nutrition;
             UIManager.instance.AddMessage($"The {food.name} is absorbed by {digestiveTract.Owner.name}'s greedy intestine", "#0BA10B");
 
             if (intestineTimers[food] <= 0)

@@ -17,8 +17,6 @@ public class Fighter : MonoBehaviour
                 UIManager.instance.SetHealth(hp, maxHp);
             }
 
-            if (hp == 0)
-                Die();
         }
     }
 
@@ -65,45 +63,6 @@ public class Fighter : MonoBehaviour
 
         return 0;
     }
-
-    private void Start()
-    {
-        if (GetComponent<Player>())
-        {
-            UIManager.instance.SetHealthMax(maxHp);
-            UIManager.instance.SetHealth(hp, maxHp);
-        }
-    }
-
-    public void Die()
-    {
-        if (GetComponent<Actor>().IsAlive)
-        {
-            if (GetComponent<Player>())
-            {
-                UIManager.instance.AddMessage($"You died", "#ff0000");
-            }
-            else
-            {
-                GameManager.instance.Actors[0].GetComponent<Level>().AddExperience(GetComponent<Level>().XpGiven); // give xp to player
-                UIManager.instance.AddMessage($"{name} is dead", "#ffa500");
-            }
-            GetComponent<Actor>().IsAlive = false;
-        }
-
-        SpriteRenderer spriteRenderer = GetComponent<Actor>().SpriteRenderer;
-        spriteRenderer.sprite = GameManager.instance.DeadSprite;
-        spriteRenderer.color = new Color(191, 0, 0, 1);
-        spriteRenderer.sortingOrder = 0;
-
-        name = $"Remains of {name}";
-        GetComponent<Actor>().BlocksMovement = false;
-        if (!GetComponent<Player>())
-        {
-            GameManager.instance.RemoveActor(this.GetComponent<Actor>());
-        }
-    }
-
     public int Heal(int amount)
     {
         if (hp == maxHp)

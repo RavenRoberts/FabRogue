@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider hpSlider;
     [SerializeField] private TextMeshProUGUI hpSliderText;
 
+    [Header("Stamina UI")]
+    [SerializeField] private Slider staminaSlider;
+    [SerializeField] private TextMeshProUGUI staminaSliderText;
+
     [Header("Message UI")]
     [SerializeField] private int sameMessageCount = 0; //read only
     [SerializeField] private string lastMessage; //ready only
@@ -91,6 +95,18 @@ public class UIManager : MonoBehaviour
         hpSlider.value = hp;
         hpSliderText.text = $"HP: {hp}/{maxHp}";
     }
+
+    public void SetStaminaMax(int staminaHp)
+    {
+        staminaSlider.maxValue = staminaHp;
+    }
+
+    public void SetStamina(int stamina, int maxStamina)
+    {
+        staminaSlider.value = stamina;
+        staminaSliderText.text = $"SP: {stamina}/{maxStamina}";
+    }
+
 
     public void SetDungeonFloorText(int floor)
     {

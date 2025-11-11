@@ -81,7 +81,14 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        if (actors[actorNum].GetComponent<Player>())
+        Actor currentActor = actors[actorNum];
+        DigestionManager digestion = currentActor.GetComponent<DigestionManager>();
+        if (digestion != null)
+        {
+            digestion.TickDigestion();
+        }
+
+        if (currentActor.GetComponent<Player>())
         {
             isPlayerTurn = false;
         }
@@ -94,17 +101,7 @@ public class GameManager : MonoBehaviour
         {
             actorNum++;
         }
-
-        foreach (Actor actor in actors)
-        {
-            DigestionManager digestion = actor.GetComponent<DigestionManager>();
-            if (digestion != null)
-            {
-                digestion.TickDigestion();
-            }
-        }
-
-            StartCoroutine(TurnDelay());
+        StartCoroutine(TurnDelay());
     }
 
     private IEnumerator TurnDelay()
@@ -136,6 +133,22 @@ public class GameManager : MonoBehaviour
     {
         entity.gameObject.SetActive(false);
         entities.Remove(entity);
+    }
+
+    public void RemoveFromPlay(Entity entity)
+    {
+        entities.Remove(entity);
+        Actor actor = entity.GetComponent<Actor>();
+        entity.gameObject.SetActive(false);
+        if (actor != null)
+        {
+            actors.Remove(actor);
+        }
+        entity.BlocksMovement = false;
+        if (entity.SpriteRenderer != null)
+        {
+            entity.SpriteRenderer.enabled = false;
+        }
     }
     public void DestroyEntity(Entity entity)
     {

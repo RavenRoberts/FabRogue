@@ -147,7 +147,7 @@ static public class Action
         if (damage > 0)
         {
             UIManager.instance.AddMessage($"{attackDesc} for {damage} hit points.", colorHex);
-            target.GetComponent<Fighter>().Hp -= damage;
+            target.Hp -= damage;
         }
         else
         {
@@ -167,31 +167,6 @@ static public class Action
     {
         GameManager.instance.EndTurn();
     }
-
-    static public void UseAbilityAction(Actor caster, int slotIndex)
-    {
-        Ability ability = caster.AbilitySlots.GetAbility(slotIndex);
-
-        if (ability == null)
-        {
-            UIManager.instance.AddMessage($"No ability equipped in slot {slotIndex + 1}.", "#808080");
-            return;
-        }
-
-        if (ability.RequiresTarget)
-        {
-            caster.GetComponent<Player>().ToggleTargetMode(ability);
-            return;
-        }
-
-        bool activated = ability.Activate(caster);
-
-        if (activated)
-        {
-            GameManager.instance.EndTurn();
-        }
-    }
-
     static public void CastAbilityAction(Actor caster, Vector3 targetPosition, Ability ability)
     {
         bool success = ability.Cast(caster, targetPosition);
@@ -203,7 +178,7 @@ static public class Action
         }
     }
 
-
+    
     static public void CastAction(Actor consumer, Actor target, Consumable consumable)
     {
         bool castSuccess = consumable.Cast(consumer, target);

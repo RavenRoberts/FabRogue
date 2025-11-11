@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 16
+  maxHp: 25
   hp: 16
   baseDefense: 1
   basePower: 5

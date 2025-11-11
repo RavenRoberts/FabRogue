@@ -88,7 +88,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "AbilityMain",
+                    "name": "Ability",
                     "type": "Button",
                     "id": "43e57185-68c7-4809-8c7d-afdb25c09555",
                     "expectedControlType": "",
@@ -347,7 +347,51 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Arrow Keys",
-                    "action": "AbilityMain",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d9ec1e16-6aaf-4509-8316-8c8bd6038f44",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arrow Keys",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e86adb4d-fcef-492c-9cc4-97d3ffd692bf",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arrow Keys",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23d212d5-ddc4-417a-9aff-4ac6e4f75fc7",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arrow Keys",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "83f2f4ac-1538-4904-996a-2db7efc31c39",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Arrow Keys",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

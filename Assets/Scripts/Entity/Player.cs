@@ -115,15 +115,24 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
-    public void OnAbilityMain(InputAction.CallbackContext context)
+    public void OnAbility(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
             if (CanAct())
             {
-                Actor actor = GetComponent<Actor>();
+                int slotIndex = -1;
 
-                Action.UseAbilityAction(actor, 0);
+                if (Keyboard.current.spaceKey.isPressed) slotIndex = 0;
+                else if (Keyboard.current.digit1Key.isPressed) slotIndex = 1;
+                else if (Keyboard.current.digit2Key.isPressed) slotIndex = 2;
+                else if (Keyboard.current.digit3Key.isPressed) slotIndex = 3;
+                else if (Keyboard.current.digit4Key.isPressed) slotIndex = 4;
+
+                if (slotIndex >= 0)
+                {
+                    GetComponent<AbilitySlots>().UseAbility(slotIndex, GetComponent<Actor>());
+                }
             }
         }
     }
@@ -145,72 +154,6 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
             }
         }
     }
-    /*
-    public void OnConfirm(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            Actor actor = GetComponent<Actor>();
-            Inventory inv = actor.Inventory;
-            Ability activeAbility = this.activeAbility;
-
-            if (targetMode)
-            {
-                if (isSingleTarget)
-                {
-                    Actor target = SingleTargetChecks(targetObject.transform.position);
-
-                    if (target != null)
-                    {
-                        if (inv.SelectedConsumable != null)
-                        {
-                            Action.CastAction(actor, target, inv.SelectedConsumable);
-                        }
-                        else if (activeAbility != null)
-                        {
-                            Action.CastAbilityAction(actor, target, activeAbility);
-                        }
-                        
-                    }
-                }
-                else
-                {
-                    List<Actor> targets = AreaTargetChecks(targetObject.transform.position);
-
-                    if (targets != null)
-                    {
-                        if (inv.SelectedConsumable != null)
-                        {
-                            Action.CastAction(GetComponent<Actor>(), targets, GetComponent<Inventory>().SelectedConsumable);
-                        }
-                        else if (activeAbility != null)
-                        {
-                            bool anySuccess = false;
-
-                            foreach (Actor t in targets)
-                            {
-                                if (activeAbility.Cast(actor, t.transform.position))
-                                {
-                                    anySuccess = true;
-                                }
-                            }
-                            if (anySuccess)
-                            {
-                                GameManager.instance.EndTurn();
-                                ToggleTargetMode(false);
-                                this.activeAbility = null;
-                            }
-                        }
-                    }
-                }
-            }
-            else if (CanAct())
-            {
-                Action.TakeStairsAction(GetComponent<Actor>());
-            }
-        }
-    }*/
-
     public void OnConfirm(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -255,7 +198,7 @@ public class Player : MonoBehaviour, Controls.IPlayerActions
             }
         }
     }
-
+    
     public void ToggleTargetMode(bool isArea = false, int radius = 1)
     {
         targetMode = !targetMode;

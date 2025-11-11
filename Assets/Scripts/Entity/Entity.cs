@@ -8,6 +8,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Vector2Int size = new Vector2Int(1, 1);
     [SerializeField] private Vector3[] occupiedTiles;
+
+    [Header("Edible Properties")]
     [SerializeField] private int integrity = 0;
     [SerializeField] private int nutrition = 0;
 

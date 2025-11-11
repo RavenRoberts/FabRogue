@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: -2361352237876395044}
   - component: {fileID: 7904899720310799237}
   - component: {fileID: -3512532768577816224}
+  - component: {fileID: -6746174892831655156}
+  - component: {fileID: 509136141028913297}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -140,12 +142,19 @@ MonoBehaviour:
   fieldOfViewRange: 8
   fieldOfView: []
   aI: {fileID: 0}
+  level: {fileID: 5584093297530255128}
+  maxHp: 40
+  hp: 40
+  maxStamina: 25
+  stamina: 25
+  baseDefense: 0
+  basePower: 0
   inventory: {fileID: 223632056598495259}
   abilitySlots: {fileID: 4248730666713744933}
   equipment: {fileID: -2823092843041273790}
   digestiveTract: {fileID: -3512532768577816224}
   fighter: {fileID: -3878619934340393615}
-  level: {fileID: 5584093297530255128}
+  target: {fileID: 0}
 --- !u!114 &-3878619934340393615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +248,7 @@ MonoBehaviour:
   duration: 0
   radius: 1
   range: 1
+  cost: 0
   requiresTarget: 1
   affectsSelf: 0
 --- !u!114 &7904899720310799237
@@ -270,6 +280,44 @@ MonoBehaviour:
   stomachContents: []
   intestineContents: []
   acidity: 1
+--- !u!114 &-6746174892831655156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c3597dbd1f8c429ab3313494ccfd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Drain
+  magnitude: 0
+  duration: 0
+  radius: 1
+  range: 1
+  cost: 0
+  requiresTarget: 1
+  affectsSelf: 0
+--- !u!114 &509136141028913297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d7932ec109fb44aa248dfb8e0ba3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoulOrb
+  magnitude: 0
+  duration: 0
+  radius: 1
+  range: 1
+  cost: 0
+  requiresTarget: 1
+  affectsSelf: 0
 --- !u!1 &6065228494201771905
 GameObject:
   m_ObjectHideFlags: 0
