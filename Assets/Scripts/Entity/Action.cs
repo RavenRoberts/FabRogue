@@ -32,10 +32,15 @@ static public class Action
         Vector3Int pos = MapManager.instance.FloorMap.WorldToCell(actor.transform.position);
         string tileName = MapManager.instance.FloorMap.GetTile(pos).name;
 
-        if (tileName != MapManager.instance.UpStairsTile.name && tileName != MapManager.instance.DownStairsTile.name)
+
+        if (tileName != null)
         {
-            UIManager.instance.AddMessage("There are no stairs here.", "#0da2ff");
-            return;
+            if (tileName != MapManager.instance.UpStairsTile.name && tileName != MapManager.instance.DownStairsTile.name)
+            {
+                UIManager.instance.AddMessage("There are no stairs here.", "#0da2ff");
+         
+            }
+        return;
         }
 
         if (SaveManager.instance.CurrentFloor == 1 && tileName == MapManager.instance.UpStairsTile.name)

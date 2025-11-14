@@ -20,8 +20,6 @@ GameObject:
   - component: {fileID: -2361352237876395044}
   - component: {fileID: 7904899720310799237}
   - component: {fileID: -3512532768577816224}
-  - component: {fileID: -6746174892831655156}
-  - component: {fileID: 509136141028913297}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -136,7 +134,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3768180656701754500}
   size: {x: 1, y: 1}
   occupiedTiles: []
-  integrity: 0
+  baseIntegrity: 0
   nutrition: 0
   isAlive: 1
   fieldOfViewRange: 8
@@ -279,45 +277,10 @@ MonoBehaviour:
   owner: {fileID: 0}
   stomachContents: []
   intestineContents: []
+  digestiveTractContents: []
   acidity: 1
---- !u!114 &-6746174892831655156
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957274491260647867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b78c3597dbd1f8c429ab3313494ccfd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Drain
-  magnitude: 0
-  duration: 0
-  radius: 1
-  range: 1
-  cost: 0
-  requiresTarget: 1
-  affectsSelf: 0
---- !u!114 &509136141028913297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957274491260647867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d7932ec109fb44aa248dfb8e0ba3e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SoulOrb
-  magnitude: 0
-  duration: 0
-  radius: 1
-  range: 1
-  cost: 0
-  requiresTarget: 1
-  affectsSelf: 0
+  metabolism: 10
+  digestionManager: {fileID: 7904899720310799237}
 --- !u!1 &6065228494201771905
 GameObject:
   m_ObjectHideFlags: 0

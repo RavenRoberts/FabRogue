@@ -10,14 +10,14 @@ public class Entity : MonoBehaviour
     [SerializeField] private Vector3[] occupiedTiles;
 
     [Header("Edible Properties")]
-    [SerializeField] private int integrity = 0;
+    [SerializeField] private int baseIntegrity = 0;
     [SerializeField] private int nutrition = 0;
 
     public bool BlocksMovement { get => blocksMovement; set => blocksMovement = value; }
     public SpriteRenderer SpriteRenderer { get => spriteRenderer; set => spriteRenderer = value; }
     public Vector2Int Size { get => size; set => size = value; }
     public Vector3[] OccupiedTiles { get => occupiedTiles; set => occupiedTiles = value; }
-    public int Integrity { get => integrity; set => integrity = value; }
+    public int BaseIntegrity { get => baseIntegrity; set => baseIntegrity = value; }
     public int Nutrition { get => nutrition; set => nutrition = value; }
 
 

@@ -42,7 +42,6 @@ public class Ability : MonoBehaviour
     public virtual bool Cast(Actor caster, Vector3 targetPosition)
     {
         List<Entity> targets = new List<Entity>();
-        Fighter casterFighter = caster.GetComponent<Fighter>();
         if (caster.Stamina < cost)
         {
             UIManager.instance.AddMessage($"{caster.name} doesn't have enough stamina!", "#808080");

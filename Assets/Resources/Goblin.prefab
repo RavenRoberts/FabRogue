@@ -112,7 +112,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5252565575550520459}
   size: {x: 1, y: 1}
   occupiedTiles: []
-  integrity: 25
+  baseIntegrity: 10
   nutrition: 1
   isAlive: 1
   fieldOfViewRange: 8

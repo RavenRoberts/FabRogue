@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         DigestionManager digestion = currentActor.GetComponent<DigestionManager>();
         if (digestion != null)
         {
-            digestion.TickDigestion();
+            digestion.HandleDigestion();
         }
 
         if (currentActor.GetComponent<Player>())
