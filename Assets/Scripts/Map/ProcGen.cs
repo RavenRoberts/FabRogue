@@ -23,22 +23,13 @@ sealed class ProcGen
         new Tuple<int, int>(8, 7),
         new Tuple<int, int>(10, 10),
     };
-    private List<Tuple<int, string, int>> itemChances = new List<Tuple<int, string, int>>
+    private List<Tuple<int, string, int>> itemChances = new List<Tuple<int, string, int>>// floor number, item name, generation ratio (how often)
     {
-        new Tuple<int, string, int>(0, "Potion of Health", 35),
-        new Tuple<int, string, int>(0, "Apple", 60),
-        new Tuple<int, string, int>(0, "Confusion Scroll", 10),
-        new Tuple<int, string, int>(0, "Lightning Scroll", 25), new Tuple<int, string, int>(0, "Sword", 5),
-        new Tuple<int, string, int>(0, "Fireball Scroll", 25), new Tuple<int, string, int>(0, "Chain Mail", 15),
+        new Tuple<int, string, int>(0, "Apple", 100),
     };
-    private List<Tuple<int, string, int>> monsterChances = new List<Tuple<int, string, int>>
+    private List<Tuple<int, string, int>> monsterChances = new List<Tuple<int, string, int>> 
     {
-        new Tuple<int, string, int>(1, "Orc", 40),
-        new Tuple<int, string, int>(1, "Goblin", 60),
-        new Tuple<int, string, int>(1, "Slime", 20),
-        new Tuple<int, string, int>(0, "Troll", 15),
-        new Tuple<int, string, int>(5, "Troll", 30),
-        new Tuple<int, string, int>(7, "Troll", 60),
+        new Tuple<int, string, int>(0, "Goblin", 100),
     };
 
     private readonly HashSet<Vector3Int> tunnelCoords = new();

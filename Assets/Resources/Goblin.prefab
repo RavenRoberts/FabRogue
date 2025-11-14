@@ -121,8 +121,8 @@ MonoBehaviour:
   level: {fileID: 1791564697180652187}
   maxHp: 8
   hp: 8
-  maxStamina: 0
-  stamina: 0
+  maxStamina: 10
+  stamina: 10
   baseDefense: 0
   basePower: 0
   inventory: {fileID: 0}

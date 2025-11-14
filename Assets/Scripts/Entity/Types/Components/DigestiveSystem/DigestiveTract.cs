@@ -14,6 +14,9 @@ public class DigestiveTract : MonoBehaviour
 
     [SerializeField] private int acidity = 0;
     [SerializeField] private int metabolism = 0;
+
+    [SerializeField] private int passiveStamina = 0;
+
     public Actor Owner { get => owner; }
     public List<Entity> StomachContents { get => stomachContents; }
     public List <Entity> IntestineContents { get => intestineContents; }
@@ -36,6 +39,17 @@ public class DigestiveTract : MonoBehaviour
     {
         owner = GetComponent<Actor>();
         foodLocation = new Dictionary<Entity, DigestionChamber>();
+    }
+
+    public void PassiveStamina() //putting this here for now because idk where else it can go neatly
+    {
+        passiveStamina++;
+
+        if (passiveStamina >= Metabolism)
+        {
+            owner.Stamina++;
+            passiveStamina = 0;
+        }
     }
 
     public void AddToStomach(Entity food)
@@ -69,28 +83,17 @@ public class DigestiveTract : MonoBehaviour
         digestionManager.CurrentIntegrity[food] = food.BaseIntegrity;
 
     }
-
-    public void MoveToIntestine(Entity food)
-    {
-        if (stomachContents.Contains(food))
-        {
-            stomachContents.Remove(food);
-            intestineContents.Add(food);
-        }
-    }
-
-    public void EmptyIntestine(Entity food)
-    {
-        if (intestineContents.Contains(food))
-        {
-            intestineContents.Remove(food);
-        }
-    }
-
 }
 
 public enum DigestionChamber
 {
     Stomach,
-    Intestine
+    Intestine,
+
+    Duodenum,
+    Jejenum,
+    Ileum,
+    RisingColon,
+    TransverseColon,
+    DescentingColon,
 }

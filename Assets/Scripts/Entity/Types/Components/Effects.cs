@@ -2,13 +2,32 @@ using UnityEngine;
 
 public class Effects : MonoBehaviour
 {
-    public static void RestoreHealth(Actor target, int amount)//will need changing if we merge fighter with actor
+    public static void RestoreHealth(Actor target, int amount)
     {
         if (target.Hp == target.MaxHp)
         {
             amount = 0;
             return;
         };
+
+        int newHPValue = target.Hp + amount;
+        if (newHPValue > target.MaxHp)
+        {
+            newHPValue = target.MaxHp;
+        }
+
+        int amountRecovered = newHPValue - target.Hp;
+        target.Hp = newHPValue;
+    }
+
+    public static void Restorestamina(Actor target, int amount)
+    {
+        if (target.Hp == target.MaxHp)
+        {
+            amount = 0;
+            return;
+        }
+        ;
 
         int newHPValue = target.Hp + amount;
         if (newHPValue > target.MaxHp)

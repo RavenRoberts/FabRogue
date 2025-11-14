@@ -9,6 +9,7 @@ public class DigestionManager : MonoBehaviour
     [SerializeField] private Dictionary<Entity, int> metabolicTimers = new Dictionary<Entity, int>();
     [SerializeField] private Dictionary<Entity, int> currentIntegrity = new Dictionary<Entity, int>();
 
+
     public Dictionary<Entity, int> MetabolicTimers { get => metabolicTimers; set => metabolicTimers = value; }
     public Dictionary<Entity, int> CurrentIntegrity { get => currentIntegrity; set => currentIntegrity = value; }
 

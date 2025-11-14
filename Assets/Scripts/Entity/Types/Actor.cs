@@ -72,12 +72,12 @@ public class Actor : Entity
     }
     public int MaxStamina
     {
-        get => MaxStamina; set
+        get => maxStamina; set
         {
-            MaxStamina = value;
+            maxStamina = value;
             if (GetComponent<Player>())
             {
-                UIManager.instance.SetStaminaMax(MaxStamina);
+                UIManager.instance.SetStaminaMax(maxStamina);
             }
         }
     }

@@ -88,6 +88,14 @@ public class GameManager : MonoBehaviour
             digestion.HandleDigestion();
         }
 
+        foreach (var actor in actors)
+        {
+            if (actor.DigestiveTract != null)
+            {
+                actor.DigestiveTract.PassiveStamina();
+            }
+        }
+
         if (currentActor.GetComponent<Player>())
         {
             isPlayerTurn = false;
