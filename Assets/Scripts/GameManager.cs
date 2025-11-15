@@ -88,12 +88,9 @@ public class GameManager : MonoBehaviour
             digestion.HandleDigestion();
         }
 
-        foreach (var actor in actors)
+        if (currentActor.DigestiveTract != null)
         {
-            if (actor.DigestiveTract != null)
-            {
-                actor.DigestiveTract.PassiveStamina();
-            }
+            currentActor.DigestiveTract.PassiveStamina();
         }
 
         if (currentActor.GetComponent<Player>())
