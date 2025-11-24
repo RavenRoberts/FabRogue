@@ -15,6 +15,10 @@ public class Actor : Entity
     [Header("Stats")]
     [SerializeField] private Level level;
     [SerializeField] private int maxHp, hp, maxStamina, stamina, baseDefense, basePower;
+    /*
+    [Header("Resistances")]
+    [SerializeField] private int physicalRes;
+    */// eventually want % damage reduction from different damage types ala rift wizard
 
     [Header("Containers")]
     [SerializeField] private Inventory inventory;

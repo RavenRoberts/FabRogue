@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Fighter
   maxHp: 30
   hp: 30
-  baseDefense: 1
+  baseDefense: 0
   basePower: 2
   target: {fileID: 0}
 --- !u!114 &223632056598495259
