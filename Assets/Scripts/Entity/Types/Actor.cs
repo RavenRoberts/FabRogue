@@ -14,18 +14,42 @@ public class Actor : Entity
 
     [Header("Stats")]
     [SerializeField] private Level level;
-    [SerializeField] private int maxHp, hp, maxStamina, stamina, baseDefense, basePower;
-    /*
-    [Header("Resistances")]
-    [SerializeField] private int physicalRes;
-    */// eventually want % damage reduction from different damage types ala rift wizard
+    [SerializeField] private int maxHp, hp, maxStamina, stamina, basePower;
+    [SerializeField] private List<FlatDefenseEntry> baseFlatDefense = new();
+    [SerializeField] private List<PercentDefenseEntry> basePercentDefense = new();
+
+    [System.Serializable]
+    public struct Damage
+    {
+        public int Amount;
+        public DamageType Type;
+
+        public Damage(int amount, DamageType type)
+        {
+            Amount = amount;
+            Type = type;
+        }
+    }
+
+    [System.Serializable]
+    public struct FlatDefenseEntry
+    {
+        public DamageType type;
+        public int value;
+    }
+
+    [System.Serializable]
+    public struct PercentDefenseEntry
+    {
+        public DamageType type;
+        public float value; // stored as percentage 0-100
+    }
 
     [Header("Containers")]
     [SerializeField] private Inventory inventory;
     [SerializeField] private AbilitySlots abilitySlots;
     [SerializeField] private Equipment equipment;
     [SerializeField] private DigestiveTract digestiveTract;
-    [SerializeField] private Fighter fighter;
     [SerializeField] private Actor target;
 
     AdamMilVisibility algorithm;
@@ -33,6 +57,7 @@ public class Actor : Entity
     public bool IsAlive { get => isAlive; set => isAlive = value; }
     public List<Vector3Int> FieldOfView { get => fieldOfView; }
     public Level Level { get => level; set => level = value; }
+
     public int Hp
     {
         get => hp; set
@@ -85,45 +110,52 @@ public class Actor : Entity
             }
         }
     }
-    public int BaseDefense { get => baseDefense; set => baseDefense = value; }
+
     public int BasePower { get => basePower; set => basePower = value; }
     public Actor Target { get => target; set => target = value; }
 
-    public int Power()
+    public int Power(DamageType type = DamageType.Physical)
     {
-        return basePower + PowerBonus();
+        return basePower + GetDamageBonus(type);
     }
 
-    public int Defense()
+    public int GetDamageBonus(DamageType type)
     {
-        return baseDefense + DefenseBonus();
+        return equipment != null ? equipment.GetDamageBonus(type) : 0;
     }
-
-    public int DefenseBonus()
+    
+    public int GetFlatDefense(DamageType type)
     {
-        if (GetComponent<Equipment>() is not null)
+        int baseFlat = 0;
+        foreach (var entry in baseFlatDefense)
         {
-            return GetComponent<Equipment>().DefenseBonus();
+            if (entry.type == type)
+            {
+                baseFlat += entry.value;
+            }
         }
-
-        return 0;
+        return baseFlat + (equipment ? equipment.GetFlatDefense(type) : 0);
     }
-    public int PowerBonus()
+
+    public float GetPercentDefense(DamageType type)
     {
-        if (GetComponent<Equipment>() is not null)
+        float basePercent = 0f;
+        foreach (var entry in basePercentDefense)
         {
-            return GetComponent<Equipment>().PowerBonus();
+            if (entry.type == type)
+            {
+                basePercent += entry.value;
+            }
         }
-
-        return 0;
+        return basePercent + (equipment ? equipment.GetPercentDefense(type) : 0f);
     }
+
 
     public Inventory Inventory { get => inventory; }
     public AbilitySlots AbilitySlots { get => abilitySlots; }
     public Equipment Equipment { get => equipment; }
     public DigestiveTract DigestiveTract { get => digestiveTract; }
     public AI AI { get => aI; set => aI = value; }
-    public Fighter Fighter { get => fighter; set => fighter = value; }
 
 
     private void OnValidate()
@@ -141,11 +173,6 @@ public class Actor : Entity
         if (GetComponent<AbilitySlots>())
         {
             abilitySlots = GetComponent<AbilitySlots>();
-        }
-
-        if (GetComponent<Fighter>())
-        {
-            fighter = GetComponent<Fighter>();
         }
 
         if (GetComponent<Level>())
@@ -170,15 +197,10 @@ public class Actor : Entity
             AddToGameManager();
         }
 
-
         if (isAlive)
         {
             algorithm = new AdamMilVisibility();
             UpdateFieldOfView();
-        }
-        else if (fighter != null)
-        {
-            Effects.Die(this);
         }
 
         if (Size.x > 1 || Size.y > 1)
@@ -231,7 +253,12 @@ public class Actor : Entity
         isVisible: MapManager.instance.VisibleTiles.Contains(MapManager.instance.FloorMap.WorldToCell(transform.position)),
         position: transform.position,
         currentAI: aI != null ? AI.SaveState() : null,
-        fighterState: fighter != null ? fighter.SaveState() : null,
+
+        hp: hp,
+        maxHp: maxHp,
+        stamina: stamina,
+        maxStamina: maxStamina,
+
         levelState: level != null && GetComponent<Player>() ? level.SaveState() : null
     );
 
@@ -265,10 +292,10 @@ public class Actor : Entity
             }
         }
 
-        if (state.FighterState != null)
-        {
-            fighter.LoadState(state.FighterState);
-        }
+        Hp = state.Hp;
+        MaxHp = state.MaxHp;
+        Stamina = state.Stamina;
+        MaxStamina = state.MaxStamina;
 
         if (state.LevelState != null)
         {
@@ -282,20 +309,42 @@ public class ActorState : EntityState
 {
     [SerializeField] private bool isAlive;
     [SerializeField] private AIState currentAI;
-    [SerializeField] private FighterState fighterState;
     [SerializeField] private LevelState levelState;
+    [SerializeField] private int hp;
+    [SerializeField] private int maxHp;
+    [SerializeField] private int stamina;
+    [SerializeField] private int maxStamina;
+
+
 
     public bool IsAlive { get => isAlive; set => isAlive = value; }
     public AIState CurrentAI { get => currentAI; set => currentAI = value; }
-    public FighterState FighterState { get => fighterState; set => fighterState = value; }
     public LevelState LevelState { get => levelState; set => levelState = value; }
+    public int Hp { get => hp; set => hp = value; }
+    public int MaxHp { get => maxHp; set => maxHp = value; }
+    public int Stamina { get => stamina; set => stamina = value; }
+    public int MaxStamina { get => maxStamina; set => maxStamina = value; }
 
-    public ActorState(EntityType type = EntityType.Actor, string name = "", bool blocksMovement = false, bool isVisible = false, Vector3 position = new Vector3(),
-        bool isAlive = true, AIState currentAI = null, FighterState fighterState = null, LevelState levelState = null) : base(type, name, blocksMovement, isVisible, position)
+    public ActorState(
+        string name,
+        bool blocksMovement,
+        bool isVisible,
+        Vector3 position,
+        bool isAlive,
+        AIState currentAI, 
+        int hp,
+        int maxHp,
+        int stamina,
+        int maxStamina,
+        LevelState levelState
+    ) : base(EntityType.Actor, name, blocksMovement, isVisible, position)
     {
         this.isAlive = isAlive;
         this.currentAI = currentAI;
-        this.fighterState = fighterState;
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.stamina = stamina;
+        this.maxStamina = maxStamina;
         this.levelState = levelState;
     }
 }

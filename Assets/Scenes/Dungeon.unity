@@ -1505,7 +1505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335995024260039981, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 197.83
+      value: 197.83002
       objectReference: {fileID: 0}
     - target: {fileID: 372352767271501716, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1862,6 +1862,10 @@ PrefabInstance:
     - target: {fileID: 5090519569596904545, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -139
+      objectReference: {fileID: 0}
+    - target: {fileID: 5243634097227515590, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
+      propertyPath: m_text
+      value: c) Metabolism (+1 defense, from 2)
       objectReference: {fileID: 0}
     - target: {fileID: 5326972997968574218, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2310,6 +2314,10 @@ PrefabInstance:
     - target: {fileID: 9134245186123202622, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187180286914385484, guid: da13b5514ee6d77489aa959bedc5eae6, type: 3}
+      propertyPath: m_Name
+      value: Metabolism
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -39,13 +39,26 @@ public class Effects : MonoBehaviour
         target.Hp = newHPValue;
     }
 
-    public static void DamageHealth(Actor target, int amount)
+    public static void ApplyDamage(Actor target, int amount, StatType stat, DamageType type)
     {
-        //add in defence later, ill want to rework that whole system
+        int flat = target.GetFlatDefense(type);
+        float percent = target.GetPercentDefense(type);
 
-        target.Hp -= amount;
+        int afterFlat = Mathf.Max(0, amount - flat);
+        int finalDamage = Mathf.RoundToInt(afterFlat * (1f - percent / 100f));
 
+        switch (stat)
+        {
+            case StatType.Health:
+                target.Hp -= finalDamage;
+                break;
+            case StatType.Stamina:
+                target.Stamina -= finalDamage;
+                break;
+        }
     }
+
+
 
     public static void Swallow(Actor caster, Entity target)
     {
@@ -84,4 +97,20 @@ public class Effects : MonoBehaviour
         }
     }
 
+}
+
+
+public enum StatType
+{
+    Health,
+    Stamina
+}
+
+public enum DamageType
+{
+    Physical,
+    Acid,
+
+    Corpus,
+    Astral
 }

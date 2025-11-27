@@ -15,7 +15,7 @@ public class SoulOrb : Ability
     protected override void ApplyEffect(Actor caster, Entity target)
     {
         Actor area = target.GetComponent<Actor>();
-        Effects.DamageHealth(area, magnitude);
+        Effects.ApplyDamage(area, magnitude, StatType.Health, DamageType.Astral);
 
         UIManager.instance.AddMessage($"{caster.name} scorches the ground with soul energy!", "#ff0000");
     }

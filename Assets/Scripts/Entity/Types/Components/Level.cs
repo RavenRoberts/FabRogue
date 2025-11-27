@@ -39,8 +39,8 @@ public class Level : MonoBehaviour
 
     public void IncreaseMaxHp(int amount = 20)
     {
-        GetComponent<Fighter>().MaxHp += amount;
-        GetComponent<Fighter>().Hp += amount;
+        GetComponent<Actor>().MaxHp += amount;
+        GetComponent<Actor>().Hp += amount;
 
         UIManager.instance.AddMessage($"Your health improves!", "#00ff00");
         IncreaseLevel();
@@ -48,16 +48,20 @@ public class Level : MonoBehaviour
 
     public void IncreasePower(int amount = 1)
     {
-        GetComponent<Fighter>().BasePower += amount;
+        GetComponent<Actor>().BasePower += amount;
 
         UIManager.instance.AddMessage($"You feel stronger!", "#00ff00");
         IncreaseLevel();
     }
-    public void IncreaseDefense(int amount = 1)
+    public void IncreaseMetabolism(int amount = 1)
     {
-        GetComponent<Fighter>().BaseDefense += amount;
+        Actor actor = GetComponent<Actor>();
 
-        UIManager.instance.AddMessage($"You feel faster!", "#00ff00");
+        if (actor.DigestiveTract != null)
+        {
+            actor.DigestiveTract.Metabolism += amount;
+            UIManager.instance.AddMessage($"Your belly feels more efficient!", "#00ff00");
+        }
         IncreaseLevel();
     }
 

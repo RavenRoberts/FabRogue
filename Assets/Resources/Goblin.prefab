@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3248684678930179478}
   - component: {fileID: 5252565575550520459}
   - component: {fileID: 5897223660054616553}
-  - component: {fileID: 8565738878586325533}
   - component: {fileID: 6694527197386572942}
   - component: {fileID: -5121539719921142362}
   - component: {fileID: 1791564697180652187}
@@ -123,30 +122,11 @@ MonoBehaviour:
   hp: 8
   maxStamina: 10
   stamina: 10
-  baseDefense: 0
-  basePower: 0
+  basePower: 4
   inventory: {fileID: 0}
   abilitySlots: {fileID: 0}
   equipment: {fileID: -2747349118493138835}
   digestiveTract: {fileID: 0}
-  fighter: {fileID: 8565738878586325533}
-  target: {fileID: 0}
---- !u!114 &8565738878586325533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199910914733307333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 8
-  hp: 8
-  baseDefense: 0
-  basePower: 2
   target: {fileID: 0}
 --- !u!114 &6694527197386572942
 MonoBehaviour:
@@ -173,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HostileEnemy
   aStar: {fileID: 6694527197386572942}
-  fighter: {fileID: 8565738878586325533}
+  actor: {fileID: 5897223660054616553}
   isFighting: 0
 --- !u!114 &1791564697180652187
 MonoBehaviour:
@@ -205,5 +185,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c35598c0bc198b45997634dddb19cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
-  weapon: {fileID: 0}
-  armor: {fileID: 0}

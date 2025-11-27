@@ -38,17 +38,29 @@ public class Item : Entity
             SpriteRenderer.enabled = false;
         }
 
-        if (state.Parent != "")
+        transform.position = state.Position;
+
+        if (!string.IsNullOrEmpty(state.Parent))
         {
             GameObject parent = GameObject.Find(state.Parent);
-            parent.GetComponent<Inventory>().Add(this);
-
-            if (equippable is not null && state.Name.Contains("(E)"))
+            if (parent != null)
             {
-                parent.GetComponent<Equipment>().EquipToSlot(equippable.EquipmentType.ToString(), this, false);
+                Inventory inventory = parent.GetComponent<Inventory>();
+                if (inventory != null)
+                {
+                    inventory.Add(this);
+                }
+
+                if (equippable != null && state.Name.Contains("(E)"))
+                {
+                    Equipment equipment = parent.GetComponent<Equipment>();
+                    if (equipment != null)
+                    {
+                        equipment.EquipItem(equippable);
+                    }
+                }
             }
         }
-        transform.position = state.Position;
     }
 }
 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4972137787809416616}
   - component: {fileID: 8042776917614080047}
   - component: {fileID: 4575591567161382411}
-  - component: {fileID: -4969953512392347351}
+  - component: {fileID: 1567492314510026855}
   m_Layer: 0
   m_Name: Dagger
   m_TagString: Untagged
@@ -81,8 +81,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7679169060892889690, guid: 5245d3963d3faca44a9ea638ab5a63d3, type: 3}
-  m_Color: {r: 0.1986917, g: 0.88227874, b: 0.8962264, a: 1}
+  m_Sprite: {fileID: -6197464602949744671, guid: 5245d3963d3faca44a9ea638ab5a63d3, type: 3}
+  m_Color: {r: 0.67154855, g: 0.94662416, b: 0.96981126, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -108,9 +108,11 @@ MonoBehaviour:
   spriteRenderer: {fileID: 8042776917614080047}
   size: {x: 1, y: 1}
   occupiedTiles: []
+  baseIntegrity: 0
+  nutrition: 1
   consumable: {fileID: 0}
-  equippable: {fileID: -4969953512392347351}
---- !u!114 &-4969953512392347351
+  equippable: {fileID: 0}
+--- !u!114 &1567492314510026855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,9 +121,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5277026343733962276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dfe91d7b62f2c047bd37ba42336e555, type: 3}
+  m_Script: {fileID: 11500000, guid: c1f84ab1bae428b498a760316d11c10e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dagger
-  equipmentType: 0
-  powerBonus: 2
-  defenseBonus: 0
+  m_EditorClassIdentifier: Assembly-CSharp::Equippable
+  equipmentSlot: 0
+  damageBonuses:
+  - type: 0
+    value: 2
+  flatDefense: []
+  percentDefense: []

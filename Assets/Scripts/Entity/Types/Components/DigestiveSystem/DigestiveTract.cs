@@ -24,8 +24,8 @@ public class DigestiveTract : MonoBehaviour
     public List<Entity> DigestiveTractContents { get => digestiveTractContents; }
     public Dictionary<Entity, DigestionChamber> FoodLocation { get => foodLocation; }
 
-    public int Acidity { get => acidity; }
-    public int Metabolism { get => metabolism; }
+    public int Acidity { get => acidity; set => acidity = value; }
+    public int Metabolism { get => metabolism; set => metabolism = value; }
 
     public Dictionary<DigestionChamber, DigestionChamber?> digestionPathways = new Dictionary<DigestionChamber, DigestionChamber?>()
     {
@@ -95,5 +95,5 @@ public enum DigestionChamber
     Ileum,
     RisingColon,
     TransverseColon,
-    DescentingColon,
+    DescendingColon,
 }

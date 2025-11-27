@@ -171,15 +171,15 @@ sealed class ProcGen
         {
            GameObject player = MapManager.instance.CreateEntity("Player", (Vector2Int)playerPos);
            Actor playerActor = player.GetComponent<Actor>();
-            /*
+            
             Item starterWeapon = MapManager.instance.CreateEntity("Dagger", (Vector2Int)playerPos).GetComponent<Item>();
             Item starterArmor = MapManager.instance.CreateEntity("Leather Armor", (Vector2Int)playerPos).GetComponent<Item>();
 
             playerActor.Inventory.Add(starterWeapon);
             playerActor.Inventory.Add(starterArmor);
 
-            playerActor.Equipment.EquipToSlot("Weapon", starterWeapon, false);
-            playerActor.Equipment.EquipToSlot("Armor", starterArmor, false);*/
+            playerActor.Equipment.EquipItem(starterWeapon.GetComponent<Equippable>());
+            playerActor.Equipment.EquipItem(starterArmor.GetComponent<Equippable>());
         }
     }
 

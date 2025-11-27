@@ -185,11 +185,11 @@ public class UIManager : MonoBehaviour
 
         GameObject constitutionButton = levelUpMenuContent.transform.GetChild(0).gameObject;
         GameObject strengthButton = levelUpMenuContent.transform.GetChild(1).gameObject;
-        GameObject agilityButton = levelUpMenuContent.transform.GetChild(2).gameObject;
+        GameObject metabolismButton = levelUpMenuContent.transform.GetChild(2).gameObject;
 
-        constitutionButton.GetComponent<TextMeshProUGUI>().text = $"a) Constitution (+20 HP, from {actor.GetComponent<Fighter>().MaxHp})";
-        strengthButton.GetComponent<TextMeshProUGUI>().text = $"b) Strength (+1 attack, from {actor.GetComponent<Fighter>().Power()})";
-        agilityButton.GetComponent<TextMeshProUGUI>().text = $"c) Agility (+1 defense, from {actor.GetComponent<Fighter>().Defense()})";
+        constitutionButton.GetComponent<TextMeshProUGUI>().text = $"a) Constitution (+20 HP, from {actor.MaxHp})";
+        strengthButton.GetComponent<TextMeshProUGUI>().text = $"b) Strength (+1 attack, from {actor.Power()})";
+        metabolismButton.GetComponent<TextMeshProUGUI>().text = $"c) Metabolism (+1 metabolism, from {actor.DigestiveTract.Metabolism})";
 
         foreach (Transform child in levelUpMenuContent.transform)
         {
@@ -205,9 +205,9 @@ public class UIManager : MonoBehaviour
                 {
                     actor.GetComponent<Level>().IncreasePower();
                 }
-                else if (agilityButton == child.gameObject)
+                else if (metabolismButton == child.gameObject)
                 {
-                    actor.GetComponent<Level>().IncreaseDefense();
+                    actor.GetComponent<Level>().IncreaseMetabolism();
                 }
                 else
                 {
@@ -230,8 +230,8 @@ public class UIManager : MonoBehaviour
             characterInformationMenu.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Level: {actor.GetComponent<Level>().CurrentLevel}";
             characterInformationMenu.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"XP: {actor.GetComponent<Level>().CurrentXp}";
             characterInformationMenu.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"XP for next level: {actor.GetComponent<Level>().XpToNextLevel}";
-            characterInformationMenu.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = $"Attack: {actor.GetComponent<Fighter>().Power()}";
-            characterInformationMenu.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = $"Defense: {actor.GetComponent<Fighter>().Defense()}";
+            characterInformationMenu.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = $"Attack: {actor.Power()}";
+            characterInformationMenu.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = $"Defense: {actor.DigestiveTract.Metabolism}";
         }
     }
 

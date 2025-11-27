@@ -14,7 +14,7 @@ public class Drain : Ability
 
         int drainAmount = Mathf.Min(magnitude, prey.Hp);
 
-        Effects.DamageHealth(prey, drainAmount);
+        Effects.ApplyDamage(prey, drainAmount, StatType.Health, DamageType.Corpus);
         Effects.RestoreHealth(caster, drainAmount);
 
 

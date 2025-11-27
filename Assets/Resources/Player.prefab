@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3768180656701754500}
   - component: {fileID: -5422147120188286624}
   - component: {fileID: 5954568212104567295}
-  - component: {fileID: -3878619934340393615}
   - component: {fileID: 223632056598495259}
   - component: {fileID: 5584093297530255128}
   - component: {fileID: -2823092843041273790}
@@ -146,30 +145,13 @@ MonoBehaviour:
   hp: 40
   maxStamina: 25
   stamina: 25
-  baseDefense: 0
-  basePower: 0
+  basePower: 2
+  baseFlatDefense: []
+  basePercentDefense: []
   inventory: {fileID: 223632056598495259}
   abilitySlots: {fileID: 4248730666713744933}
   equipment: {fileID: -2823092843041273790}
   digestiveTract: {fileID: -3512532768577816224}
-  fighter: {fileID: -3878619934340393615}
-  target: {fileID: 0}
---- !u!114 &-3878619934340393615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957274491260647867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 30
-  hp: 30
-  baseDefense: 0
-  basePower: 2
   target: {fileID: 0}
 --- !u!114 &223632056598495259
 MonoBehaviour:
@@ -216,8 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c35598c0bc198b45997634dddb19cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
-  weapon: {fileID: 0}
-  armor: {fileID: 0}
 --- !u!114 &4248730666713744933
 MonoBehaviour:
   m_ObjectHideFlags: 0

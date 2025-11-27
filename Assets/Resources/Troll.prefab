@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3248684678930179478}
   - component: {fileID: 5252565575550520459}
   - component: {fileID: 1166125933783594286}
-  - component: {fileID: -8804623019734845695}
   - component: {fileID: 627981669234461007}
   - component: {fileID: -6194782333776768822}
   - component: {fileID: -7655183845549420151}
@@ -112,34 +111,22 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5252565575550520459}
   size: {x: 1, y: 1}
   occupiedTiles: []
-  integrity: 150
+  baseIntegrity: 0
   nutrition: 1
   isAlive: 1
   fieldOfViewRange: 8
   fieldOfView: []
   aI: {fileID: -6194782333776768822}
+  level: {fileID: -7655183845549420151}
+  maxHp: 0
+  hp: 0
+  maxStamina: 0
+  stamina: 0
+  basePower: 0
   inventory: {fileID: 0}
   abilitySlots: {fileID: 0}
   equipment: {fileID: -8079714684436387694}
   digestiveTract: {fileID: 0}
-  fighter: {fileID: -8804623019734845695}
-  level: {fileID: -7655183845549420151}
---- !u!114 &-8804623019734845695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9199910914733307333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ab53fe37cdce840846c086102abece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Fighter
-  maxHp: 25
-  hp: 16
-  baseDefense: 1
-  basePower: 5
   target: {fileID: 0}
 --- !u!114 &627981669234461007
 MonoBehaviour:
@@ -166,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HostileEnemy
   aStar: {fileID: 627981669234461007}
-  fighter: {fileID: -8804623019734845695}
+  actor: {fileID: 1166125933783594286}
   isFighting: 0
 --- !u!114 &-7655183845549420151
 MonoBehaviour:
@@ -198,5 +185,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c35598c0bc198b45997634dddb19cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Equipment
-  weapon: {fileID: 0}
-  armor: {fileID: 0}

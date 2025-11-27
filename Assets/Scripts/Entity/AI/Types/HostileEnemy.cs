@@ -1,41 +1,39 @@
 using System;
-using System.Security.Cryptography;
 using UnityEngine;
 
-[RequireComponent(typeof(Fighter))]
+[RequireComponent(typeof(Actor))]
 public class HostileEnemy : AI
 {
-    [SerializeField] private Fighter fighter;
+    [SerializeField] private Actor actor;
     [SerializeField] private bool isFighting;
 
     private void OnValidate()
     {
-        fighter = GetComponent<Fighter>();
+        actor = GetComponent<Actor>();
         AStar = GetComponent<AStar>();
     }
 
     public override void RunAI()
     {
-        if (!fighter.Target)
+        if (!actor.Target)
         {
-            fighter.Target = GameManager.instance.Actors[0];
+            actor.Target = GameManager.instance.Actors[0];
         }
-        else if (fighter.Target && !fighter.Target.IsAlive)
+        else if (actor.Target && !actor.Target.IsAlive)
         {
-            fighter.Target = null;
+            actor.Target = null;
         }
 
-        if (fighter.Target)
+        if (actor.Target)
         {
-            Vector3Int targetPosition = MapManager.instance.FloorMap.WorldToCell(fighter.Target.transform.position);
-            if (isFighting || GetComponent<Actor>().FieldOfView.Contains(targetPosition))
+            Vector3Int targetPosition = MapManager.instance.FloorMap.WorldToCell(actor.Target.transform.position);
+            if (isFighting || actor.FieldOfView.Contains(targetPosition))
             {
                 if (!isFighting)
                 {
                     isFighting = true;
                 }
 
-                Actor actor = GetComponent<Actor>();
                 float targetDistance;
                 Vector3 closestTilePosition = transform.position;
 
@@ -44,7 +42,7 @@ public class HostileEnemy : AI
                     float closestDistance = float.MaxValue;
                     for(int i = 0; i < actor.OccupiedTiles.Length; i++)
                     {
-                        float distance = Vector3.Distance(actor.OccupiedTiles[i], fighter.Target.transform.position);
+                        float distance = Vector3.Distance(actor.OccupiedTiles[i], actor.Target.transform.position);
                         if (distance < closestDistance)
                         {
                             closestDistance = distance;
@@ -55,13 +53,13 @@ public class HostileEnemy : AI
                 }
                 else
                 {
-                    targetDistance = Vector3.Distance(transform.position, fighter.Target.transform.position);
+                    targetDistance = Vector3.Distance(transform.position, actor.Target.transform.position);
                 }
 
 
                 if (targetDistance <= 1.5f)
                 {
-                    Action.MeleeAction(GetComponent<Actor>(), fighter.Target);
+                    Action.MeleeAction(actor, actor.Target);
                     return;
                 }
                 else

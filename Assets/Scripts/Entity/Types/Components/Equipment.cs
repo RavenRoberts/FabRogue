@@ -1,123 +1,66 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Actor))]
 public class Equipment : MonoBehaviour
 {
-    [SerializeField] private Equippable weapon;
-    [SerializeField] private Equippable armor;
-    
-    public Equippable Weapon { get => weapon; set => weapon = value; }
-    public Equippable Armor { get => armor; set => armor = value; }
+    private Dictionary<EquipmentSlot, Equippable> equippedItems = new();
 
-    public int DefenseBonus()
+    public Equippable GetEquippedItem(EquipmentSlot slot) => 
+        equippedItems.TryGetValue(slot, out var item) ? item : null;
+
+    public void EquipItem(Equippable item)
     {
-        int bonus = 0;
+        if (item == null) return;
 
-        if (weapon is not null && weapon.DefenseBonus > 0)
-        {
-            bonus += weapon.DefenseBonus;
-        }
+        if (equippedItems.TryGetValue(item.EquipmentSlot, out var current))
+            UnequipItem(current);
 
-        if (armor is not null && armor.DefenseBonus > 0)
-        {
-            bonus += armor.DefenseBonus;
-        }
-        return bonus;
-    }
-
-    public int PowerBonus()
-    {
-        int bonus = 0;
-
-        if (weapon is not null && weapon.PowerBonus > 0)
-        {
-            bonus += weapon.PowerBonus;
-        }
-
-        if (armor is not null && armor.PowerBonus > 0)
-        {
-            bonus += armor.PowerBonus;
-        }
-        return bonus;
-    }
-
-    public bool ItemIsEquipped (Item item)
-    {
-        if (item.Equippable is null)
-        {
-            return false;
-        }
-
-        return item.Equippable == weapon || item.Equippable == armor;
-    }
-
-    public void UnequipMessage(string name)
-    {
-        UIManager.instance.AddMessage($"You remove the {name}.", "#da8ee");
-    }
-
-    public void EquipMessage(string name)
-    {
-        UIManager.instance.AddMessage($"You equip the {name}.", "#da8ee");
-    }
-
-    public void EquipToSlot(string slot, Item item, bool addMessage)
-    {
-        Equippable currentItem = slot == "Weapon" ? weapon : armor;
-
-        if (currentItem is not null)
-        {
-            UnequipFromSlot(slot, addMessage);
-        }
-
-        if (slot == "Weapon")
-        {
-            weapon = item.Equippable;
-        }
-        else
-        {
-            armor = item.Equippable;
-        }
-
-        if (addMessage)
-        {
-            EquipMessage(item.name);
-        }
-
+        equippedItems[item.EquipmentSlot] = item;
+        UIManager.instance.AddMessage($"You equip the {item.name}.", "#da8ee");
         item.name = $"{item.name} (E)";
     }
 
-    public void UnequipFromSlot(string slot, bool addMessage)
+    public void UnequipItem(Equippable item)
     {
-        Equippable currentItem = slot == "Weapon" ? weapon : armor;
-        currentItem.name = currentItem.name.Replace(" (E)", "");
+        if (item == null || !equippedItems.ContainsKey(item.EquipmentSlot)) return;
 
-        if (addMessage)
-        {
-            UnequipMessage(currentItem.name);
-        }
-
-        if (slot == "Weapon")
-        {
-            weapon = null;
-        }
-        else
-        {
-            armor = null;
-        }
+        equippedItems.Remove(item.EquipmentSlot);
+        UIManager.instance.AddMessage($"You remove the {item.name}.", "#da8ee");
+        item.name = item.name.Replace(" (E)", "");
     }
 
-    public void ToggleEquip(Item equippableItem, bool addMessage = true)
+    public void ToggleEquip(Equippable item)
     {
-        string slot = equippableItem.Equippable.EquipmentType == EquipmentType.Weapon ? "Weapon" : "Armor";
+        if (item == null) return;
 
-        if (ItemIsEquipped(equippableItem))
-        {
-            UnequipFromSlot(slot, addMessage);
-        }
+        if (equippedItems.TryGetValue(item.EquipmentSlot, out var current) && current == item)
+            UnequipItem(item);
         else
-        {
-            EquipToSlot(slot, equippableItem, addMessage);
-        }
+            EquipItem(item);
+    }
+
+    public int GetFlatDefense(DamageType type)
+    {
+        int total = 0;
+        foreach (var item in equippedItems.Values)
+            if (item != null) total += item.GetFlatDefense(type);
+        return total;
+    }
+
+    public float GetPercentDefense(DamageType type)
+    {
+        float total = 0f;
+        foreach (var item in equippedItems.Values)
+            if (item != null) total += item.GetPercentDefense(type);
+        return total;
+    }
+
+    public int GetDamageBonus(DamageType type)
+    {
+        int total = 0;
+        foreach (var item in equippedItems.Values)
+            if (item != null) total += item.GetDamageBonus(type);
+        return total;
     }
 }

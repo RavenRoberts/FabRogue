@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 static public class Action
 {
@@ -30,8 +31,21 @@ static public class Action
     static public void TakeStairsAction(Actor actor)
     {
         Vector3Int pos = MapManager.instance.FloorMap.WorldToCell(actor.transform.position);
-        string tileName = MapManager.instance.FloorMap.GetTile(pos).name;
 
+
+        TileBase tile =
+            MapManager.instance.FloorMap.GetTile(pos) ??
+            MapManager.instance.InteractableMap.GetTile(pos) ??
+            MapManager.instance.ObstacleMap.GetTile(pos);
+
+        if (tile == null)
+        {
+            UIManager.instance.AddMessage("There are no stairs here.", "#0da2ff");
+            return;
+        }
+
+        string tileName = tile.name;
+        
         if (tileName != MapManager.instance.UpStairsTile.name && tileName != MapManager.instance.DownStairsTile.name)
         {
             UIManager.instance.AddMessage("There are no stairs here.", "#0da2ff");
@@ -63,9 +77,9 @@ static public class Action
 
     static public void DropAction(Actor actor, Item item)
     {
-        if (actor.Equipment.ItemIsEquipped(item))
+        if (item.Equippable != null && actor.Equipment.GetEquippedItem(item.Equippable.EquipmentSlot) == item.Equippable)
         {
-            actor.Equipment.ToggleEquip(item);
+            actor.Equipment.ToggleEquip(item.Equippable);
         }
 
         actor.Inventory.Drop(item);
@@ -129,25 +143,22 @@ static public class Action
 
     static public void MeleeAction(Actor actor, Actor target)
     {
-        int damage = actor.GetComponent<Fighter>().Power() - target.GetComponent<Fighter>().Defense();
+        DamageType type = DamageType.Physical;
+        int baseDamage = actor.Power(type);
+
+        Effects.ApplyDamage(target, baseDamage, StatType.Health, type);
 
         string attackDesc = $"{actor.name} attacks {target.name}";
+        string colorHex = actor.GetComponent<Player>() ? "#ffffff" : "#d1a3a4";
 
-        string colorHex = "";
-
-        if (actor.GetComponent<Player>())
-        {
-            colorHex = "#ffffff";
-        }
-        else
-        {
-            colorHex = "#d1a3a4";
-        }
+        int flat = target.GetFlatDefense(type);
+        float percent = target.GetPercentDefense(type);
+        int afterFlat = Mathf.Max(0, baseDamage - flat);
+        int damage = Mathf.RoundToInt(afterFlat * (1f - percent / 100f));
 
         if (damage > 0)
         {
             UIManager.instance.AddMessage($"{attackDesc} for {damage} hit points.", colorHex);
-            target.Hp -= damage;
         }
         else
         {
@@ -201,13 +212,13 @@ static public class Action
 
     static public void EquipAction(Actor actor, Item item)
     {
-        if (item.Equippable is null)
+        if (item.Equippable == null)
         {
             UIManager.instance.AddMessage($"The {item.name} cannot be equipped.", "#808080");
             return;
         }
 
-        actor.Equipment.ToggleEquip(item);
+        actor.Equipment.ToggleEquip(item.Equippable);
 
         UIManager.instance.ToggleInventory();
         GameManager.instance.EndTurn();
