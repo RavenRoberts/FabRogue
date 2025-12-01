@@ -59,7 +59,7 @@ public class Level : MonoBehaviour
 
         if (actor.DigestiveTract != null)
         {
-            actor.DigestiveTract.Metabolism += amount;
+            actor.DigestiveTract.Metabolism -= amount;
             UIManager.instance.AddMessage($"Your belly feels more efficient!", "#00ff00");
         }
         IncreaseLevel();

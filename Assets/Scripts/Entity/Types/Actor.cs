@@ -68,11 +68,6 @@ public class Actor : Entity
             {
                 UIManager.instance.SetHealth(hp, maxHp);
             }
-
-            if (hp == 0)
-            {
-                Effects.Die(this);
-            }
         }
     }
     public int MaxHp

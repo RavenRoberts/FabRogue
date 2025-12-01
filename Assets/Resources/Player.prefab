@@ -16,10 +16,11 @@ GameObject:
   - component: {fileID: 5584093297530255128}
   - component: {fileID: -2823092843041273790}
   - component: {fileID: 4248730666713744933}
-  - component: {fileID: -2361352237876395044}
   - component: {fileID: 7904899720310799237}
   - component: {fileID: -3512532768577816224}
-  - component: {fileID: 3135543652690219079}
+  - component: {fileID: 6920390239868563676}
+  - component: {fileID: -8398824014632696495}
+  - component: {fileID: 3771071471870076261}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -211,25 +212,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySlots
   equippedAbilities: []
---- !u!114 &-2361352237876395044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957274491260647867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6863c22fa093bb94c84916b6dcbcb7af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Swallow
-  magnitude: 0
-  duration: 0
-  radius: 1
-  range: 1
-  cost: 0
-  requiresTarget: 1
-  affectsSelf: 0
 --- !u!114 &7904899720310799237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +245,45 @@ MonoBehaviour:
   metabolism: 10
   passiveStamina: 0
   digestionManager: {fileID: 7904899720310799237}
---- !u!114 &3135543652690219079
+--- !u!114 &6920390239868563676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78c3597dbd1f8c429ab3313494ccfd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Drain
+  magnitude: 0
+  duration: 0
+  radius: 1
+  range: 1
+  cost: 0
+  requiresTarget: 1
+  affectsSelf: 0
+--- !u!114 &-8398824014632696495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957274491260647867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6863c22fa093bb94c84916b6dcbcb7af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Swallow
+  magnitude: 0
+  duration: 0
+  radius: 1
+  range: 1
+  cost: 0
+  requiresTarget: 1
+  affectsSelf: 0
+--- !u!114 &3771071471870076261
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

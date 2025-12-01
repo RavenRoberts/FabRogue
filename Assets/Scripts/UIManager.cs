@@ -189,7 +189,7 @@ public class UIManager : MonoBehaviour
 
         constitutionButton.GetComponent<TextMeshProUGUI>().text = $"a) Constitution (+20 HP, from {actor.MaxHp})";
         strengthButton.GetComponent<TextMeshProUGUI>().text = $"b) Strength (+1 attack, from {actor.Power()})";
-        metabolismButton.GetComponent<TextMeshProUGUI>().text = $"c) Metabolism (+1 metabolism, from {actor.DigestiveTract.Metabolism})";
+        metabolismButton.GetComponent<TextMeshProUGUI>().text = $"c) Metabolism (-1 metabolism, from {actor.DigestiveTract.Metabolism})";
 
         foreach (Transform child in levelUpMenuContent.transform)
         {
@@ -231,7 +231,7 @@ public class UIManager : MonoBehaviour
             characterInformationMenu.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"XP: {actor.GetComponent<Level>().CurrentXp}";
             characterInformationMenu.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"XP for next level: {actor.GetComponent<Level>().XpToNextLevel}";
             characterInformationMenu.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = $"Attack: {actor.Power()}";
-            characterInformationMenu.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = $"Defense: {actor.DigestiveTract.Metabolism}";
+            characterInformationMenu.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = $"Metabolism: {actor.DigestiveTract.Metabolism}";
         }
     }
 

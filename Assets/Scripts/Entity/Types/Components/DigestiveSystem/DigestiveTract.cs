@@ -71,8 +71,19 @@ public class DigestiveTract : MonoBehaviour
         if (next == null)
         {
             //i guess we add scat logic here?
-            UIManager.instance.AddMessage($"{Owner.name} spreads their cheeks, releasing the {food.name} back into the dungeon as shit", "#0BA10B");
+            UIManager.instance.AddMessage($"{Owner.name} spreads their cheeks, releasing the {food.name} back into the dungeon as shit", "#ffa500");           
+
             DigestiveTractContents.Remove(food);
+
+            if (food is Actor digestedPrey)
+            {
+                digestedPrey.gameObject.SetActive(true);
+                digestedPrey.SpriteRenderer.enabled = true;
+                digestedPrey.transform.position = Owner.transform.position;
+
+                Effects.HandleRemains(digestedPrey, RemainsType.Scat);
+            }
+
             FoodLocation.Remove(food);
             digestionManager.CurrentIntegrity.Remove(food);
             digestionManager.MetabolicTimers.Remove(food);

@@ -123,6 +123,10 @@ MonoBehaviour:
   maxStamina: 10
   stamina: 10
   basePower: 4
+  baseFlatDefense: []
+  basePercentDefense:
+  - type: 2
+    value: 100
   inventory: {fileID: 0}
   abilitySlots: {fileID: 0}
   equipment: {fileID: -2747349118493138835}

@@ -140,7 +140,7 @@ static public class Action
             }
         }       
     }
-
+    
     static public void MeleeAction(Actor actor, Actor target)
     {
         DamageType type = DamageType.Physical;
@@ -164,8 +164,15 @@ static public class Action
         {
             UIManager.instance.AddMessage($"{attackDesc} but does no damage", colorHex);
         }
+
+        if (target.Hp <= 0)
+        {
+            Effects.Die(target, DeathCause.Combat);
+        }
+
         GameManager.instance.EndTurn();
     }
+
 
     static public void MovementAction(Actor actor, Vector2 direction)
     {

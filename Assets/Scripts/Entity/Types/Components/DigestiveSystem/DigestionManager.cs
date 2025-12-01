@@ -31,7 +31,7 @@ public class DigestionManager : MonoBehaviour
         {
             if (!metabolicTimers.ContainsKey(food))
             {
-                metabolicTimers[food] = 1;
+                metabolicTimers[food] = digestiveTract.Metabolism;
             }
             if (!currentIntegrity.ContainsKey(food))
             {
@@ -58,8 +58,19 @@ public class DigestionManager : MonoBehaviour
 
     private void HandleStomach(Entity food)
     {
+        if (food is Actor livingPrey)
+        {
+            Effects.ApplyDamage(livingPrey, digestiveTract.Acidity, StatType.Health, DamageType.Acid);
+            if (livingPrey.Hp <= 0)
+            {
+                Effects.Die(livingPrey, DeathCause.Digestion);
+            }
+        }
+
         currentIntegrity[food] -= digestiveTract.Acidity;
         UIManager.instance.AddMessage($"The {food.name} melts in the heat of {digestiveTract.Owner.name}'s stomach", "#0BA10B");
+
+
         if (currentIntegrity[food] <= 0)
         {
             digestiveTract.MoveToChamber(food);
